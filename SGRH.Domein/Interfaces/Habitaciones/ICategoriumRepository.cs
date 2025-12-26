@@ -1,12 +1,11 @@
 ﻿
-
-using SGRH.Domein.Entitys;
 using SGRH.Domein.Interfaces.IBaseInterface;
+using SGRH.Domein.Models.Habitaciones;
 
 
 namespace SGRH.Domein.Interfaces.Habitaciones
 {
-    public interface ICategoriumRepository : IBaseInterface<Categorium>
+    public interface ICategoriumRepository : IBaseInterface<CategoriumModel>
     {
     }
 }

@@ -3,13 +3,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SGRH.Domein.Base;
-using SGRH.Domein.Interfaces.IBaseInterface;
+using SGRH.Domein.Interfaces.Usuarios;
 using SGRH.Domein.Models.Usuarios;
 using SGRH.Percistence.Context;
 
 namespace SGRH.Percistence.Repository.Usuarios
 {
-    public class UsuarioRepository : IBaseInterface<UsuarioModel>
+    public class UsuarioRepository : IUsuarioRepository
     {
         private readonly SGHRContext _context;
         private readonly ILogger<UsuarioRepository> _logger;
@@ -20,6 +20,7 @@ namespace SGRH.Percistence.Repository.Usuarios
             _logger = logger;
             _dbSet = context.Set<SGRH.Domein.Entitys.Usuario>();
         }
+
         public Task<OperationResult<UsuarioModel>> CreateAsync(UsuarioModel modelo)
         {
             throw new NotImplementedException();

@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
+using SGRH.Domein.Models.Base;
 
 namespace SGRH.Domein.Models.Habitaciones
 {
-    internal class PisoModel
+    public class PisoModel : BaseModel
     {
+        public int IdPiso { get; set; }
+
+        public string Descripcion { get; set; }
     }
 }

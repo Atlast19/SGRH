@@ -1,7 +1,16 @@
 ﻿
+using SGRH.Domein.Models.Base;
+
 namespace SGRH.Domein.Models.Habitaciones
 {
-    internal class CategoriumModel
+    public class CategoriumModel : BaseModel
     {
+        public int IdCategoria { get; set; }
+
+        public string Descripcion { get; set; }
+
+        public bool? Estado { get; set; }
+
+        public int IdServicio { get; set; }
     }
 }
