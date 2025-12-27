@@ -71,11 +71,8 @@ namespace SGRH.Percistence.Repository.Usuario
             {
                 var cliente = await _dbSet.FirstOrDefaultAsync(c => c.IdCliente == Id);
 
-                if (cliente == null)
+                if (cliente == null || IdUsuario == null)
                     result = OperationResult<ClienteModel>.Failure("Datos no encontrados");
-
-                if(IdUsuario <= 0)
-                    result = OperationResult<ClienteModel>.Failure("Se requiere el Id del usuario");
 
 
                 cliente.Estado = false;
@@ -177,7 +174,7 @@ namespace SGRH.Percistence.Repository.Usuario
 
             try
             {
-                if (modelo == null || modelo.IdCliente <= 0 || modelo.UsuarioActualizacion <= 0)
+                if (modelo == null || modelo.IdCliente == null || modelo.UsuarioActualizacion == null)
                     return result = OperationResult<ClienteModel>.Failure("El cliente es invalido");
 
                 var cliente = await _dbSet.FirstOrDefaultAsync(c => c.IdCliente == modelo.IdCliente);
