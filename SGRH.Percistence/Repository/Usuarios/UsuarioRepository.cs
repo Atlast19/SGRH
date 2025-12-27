@@ -85,7 +85,7 @@ namespace SGRH.Percistence.Repository.Usuarios
                 _dbSet.Update(usuaro);
                 await _context.SaveChangesAsync();
 
-                result = OperationResult<UsuarioModel>.Succes("Usuario eliminado correctamente");
+                result = OperationResult<UsuarioModel>.Succes("Usuario eliminado correctamente", usuaro);
                 _logger.LogInformation("Usuario eliminado correctamente");
 
             }

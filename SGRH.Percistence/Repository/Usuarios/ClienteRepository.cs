@@ -83,7 +83,7 @@ namespace SGRH.Percistence.Repository.Usuario
                  _dbSet.Update(cliente);
                  await _context.SaveChangesAsync();
 
-                result = OperationResult<ClienteModel>.Succes("Datos eliminados corectamente");
+                result = OperationResult<ClienteModel>.Succes("Datos eliminados corectamente", cliente);
 
             }
             catch (Exception e) 
@@ -191,7 +191,7 @@ namespace SGRH.Percistence.Repository.Usuario
                 _dbSet.Update(cliente);
                 await _context.SaveChangesAsync();
 
-                result = OperationResult<ClienteModel>.Succes("Datos Actualizados correctamente");
+                result = OperationResult<ClienteModel>.Succes("Datos Actualizados correctamente", cliente);
 
             }
             catch (Exception e)
