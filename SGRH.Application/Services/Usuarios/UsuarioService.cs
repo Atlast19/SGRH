@@ -7,36 +7,35 @@ using SGRH.Domein.Models.Usuarios;
 
 namespace SGRH.Application.Services.Usuarios
 {
-    public class ClienteService : IClienteService
+    public class UsuarioService : IUsuarioService
     {
-        private readonly IClienteRepository _repository;
+        private readonly IUsuarioRepository _repository;
 
-        public ClienteService(IClienteRepository repository)
+        public UsuarioService(IUsuarioRepository repository)
         {
             _repository = repository;
         }
-
-        public async Task<OperationResult<ClienteModel>> CreateAsync(ClienteModel modelo)
+        public async Task<OperationResult<UsuarioModel>> CreateAsync(UsuarioModel modelo)
         {
             return await _repository.CreateAsync(modelo);
         }
 
-        public async Task<OperationResult<ClienteModel>> DeleteAsync(int Id, int IdUsuario)
+        public async Task<OperationResult<UsuarioModel>> DeleteAsync(int Id, int IdUsuario)
         {
             return await _repository.DeleteAsync(Id, IdUsuario);
         }
 
-        public async Task<OperationResult<IEnumerable<ClienteModel>>> GetAllAsync()
+        public async Task<OperationResult<IEnumerable<UsuarioModel>>> GetAllAsync()
         {
             return await _repository.GetAllAsync();
         }
 
-        public async Task<OperationResult<ClienteModel>> GetByIdAsync(int Id)
+        public async Task<OperationResult<UsuarioModel>> GetByIdAsync(int Id)
         {
             return await _repository.GetByIdAsync(Id);
         }
 
-        public async Task<OperationResult<ClienteModel>> UpdateAsync(ClienteModel modelo)
+        public async Task<OperationResult<UsuarioModel>> UpdateAsync(UsuarioModel modelo)
         {
             return await _repository.UpdateAsync(modelo);
         }
