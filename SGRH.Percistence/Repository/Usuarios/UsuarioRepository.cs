@@ -5,7 +5,6 @@ using SGRH.Domein.Base;
 using SGRH.Domein.Interfaces.Usuarios;
 using SGRH.Domein.Models.Usuarios;
 using SGRH.Percistence.Context;
-using System.Reflection.Emit;
 
 namespace SGRH.Percistence.Repository.Usuarios
 {
@@ -21,9 +20,49 @@ namespace SGRH.Percistence.Repository.Usuarios
             _dbSet = context.Set<SGRH.Domein.Entitys.Usuario>();
         }
 
-        public Task<OperationResult<UsuarioModel>> CreateAsync(UsuarioModel modelo)
+        public async Task<OperationResult<UsuarioModel>> CreateAsync(UsuarioModel modelo)
         {
-            throw new NotImplementedException();
+            OperationResult<UsuarioModel> result = new OperationResult<UsuarioModel>();
+
+            _logger.LogInformation("Proceso de crear un usuario");
+            try
+            {
+                var usuario = new Domein.Entitys.Usuario
+                {
+                    IdUsuario = modelo.IdUsuario,
+                    NombreCompleto = modelo.NombreCompleto,
+                    Correo = modelo.Correo,
+                    IdRolUsuario = modelo.IdRolUsuario,
+                    Clave = modelo.Clave,
+                    Estado = modelo.Estado,
+                    UsuarioCreacion = modelo.UsuarioCreacion,
+                    FechaCreacion = modelo.FechaCreacion
+                };
+
+                _dbSet.Add(usuario);
+                await _context.SaveChangesAsync();
+
+                var usuarioModel = new UsuarioModel
+                {
+                    IdUsuario = modelo.IdUsuario,
+                    NombreCompleto = modelo.NombreCompleto,
+                    Correo = modelo.Correo,
+                    IdRolUsuario = modelo.IdRolUsuario,
+                    Clave = modelo.Clave,
+                    Estado = modelo.Estado,
+                    UsuarioCreacion = modelo.UsuarioCreacion,
+                    FechaCreacion = modelo.FechaCreacion
+                };
+
+                result = OperationResult<UsuarioModel>.Succes("Usuario creado correctamente", usuarioModel);
+                _logger.LogInformation("Usuario creado correctamente");
+            }
+            catch (Exception e) 
+            {
+                result = OperationResult<UsuarioModel>.Failure("Error al crear el usuario" + e.Message);
+                _logger.LogError("Error al crear el usuario" + e.Message);
+            }
+            return result;
         }
 
         public async Task<OperationResult<UsuarioModel>> DeleteAsync(int Id, int IdUsuario)
@@ -52,8 +91,8 @@ namespace SGRH.Percistence.Repository.Usuarios
             }
             catch (Exception e) 
             {
-                result = OperationResult<UsuarioModel>.Failure("Error eliminando el usuario" + e);
-                _logger.LogError("Error eliminando el usuario por ID" + e);
+                result = OperationResult<UsuarioModel>.Failure("Error eliminando el usuario" + e.Message);
+                _logger.LogError("Error eliminando el usuario por ID" + e.Message);
             }
             return result;
         }
@@ -92,8 +131,8 @@ namespace SGRH.Percistence.Repository.Usuarios
             }
             catch (Exception e) 
             {
-                result = OperationResult<IEnumerable<UsuarioModel>>.Failure("Error Cargando los datos" + e);
-                _logger.LogError("Error cargando los datos de los usuarios" + e);
+                result = OperationResult<IEnumerable<UsuarioModel>>.Failure("Error Cargando los datos" + e.Message);
+                _logger.LogError("Error cargando los datos de los usuarios" + e.Message);
             }
             return result;
         }
@@ -131,15 +170,44 @@ namespace SGRH.Percistence.Repository.Usuarios
             }
             catch (Exception e) 
             {
-                result = OperationResult<UsuarioModel>.Failure("Error cargando los datos del usuario" + e);
-                _logger.LogError("Error cargando el usuario por ID");
+                result = OperationResult<UsuarioModel>.Failure("Error cargando los datos del usuario" + e.Message);
+                _logger.LogError("Error cargando el usuario por ID" + e.Message);
             }
             return result;
         }
 
-        public Task<OperationResult<UsuarioModel>> UpdateAsync(UsuarioModel modelo)
+        public async Task<OperationResult<UsuarioModel>> UpdateAsync(UsuarioModel modelo)
         {
-            throw new NotImplementedException();
+            OperationResult<UsuarioModel> result = new OperationResult<UsuarioModel>();
+
+            _logger.LogInformation("Proceso para actualizar un usuario");
+            try
+            {
+                if (modelo == null || modelo.IdUsuario <= 0 || modelo.UsuarioActualizacion <= 0)
+                    return result = OperationResult<UsuarioModel>.Failure("Datos a Actualizar no encontrados");
+
+                var usuairo = await _dbSet.FirstOrDefaultAsync(c => c.IdUsuario == modelo.IdUsuario);
+
+
+                usuairo.NombreCompleto = modelo.NombreCompleto;
+                usuairo.Correo = modelo.Correo;
+                usuairo.Clave = modelo.Clave;
+                usuairo.IdRolUsuario = modelo.IdRolUsuario;
+                usuairo.UsuarioActualizacion = modelo.UsuarioActualizacion;
+                usuairo.FechaActualizacion = DateTime.Now;
+
+                _dbSet.Update(usuairo);
+                await _context.SaveChangesAsync();
+
+                result = OperationResult<UsuarioModel>.Succes("Usuario actualizado correctamente",usuairo);
+                _logger.LogInformation("Usuario actualizado correctamente");
+            }
+            catch (Exception e) 
+            {
+                result = OperationResult<UsuarioModel>.Failure("Error actualizando el usuario" + e.Message);
+                _logger.LogError("Error actualizando el usuario" + e.Message);
+            }
+            return result;
         }
     }
 }

@@ -177,11 +177,8 @@ namespace SGRH.Percistence.Repository.Usuario
 
             try
             {
-                if (modelo == null || modelo.IdCliente <= 0)
+                if (modelo == null || modelo.IdCliente <= 0 || modelo.UsuarioActualizacion <= 0)
                     return result = OperationResult<ClienteModel>.Failure("El cliente es invalido");
-
-                if (modelo.UsuarioActualizacion == null || modelo.UsuarioActualizacion <= 0)
-                    return OperationResult<ClienteModel>.Failure("Usuario de actualización inválido");
 
                 var cliente = await _dbSet.FirstOrDefaultAsync(c => c.IdCliente == modelo.IdCliente);
 
