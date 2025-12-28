@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SGRH.Application.Interfaces.Usuarios;
+﻿using SGRH.Application.Interfaces.Usuarios;
 using SGRH.Application.Services.Usuarios;
 using SGRH.Domein.Interfaces.Usuarios;
-using SGRH.Percistence.Context;
 using SGRH.Percistence.Repository.Usuario;
+using SGRH.Percistence.Repository.Usuarios;
 
 
 namespace SGRH.Api.Dependencies
@@ -16,6 +15,12 @@ namespace SGRH.Api.Dependencies
 
             service.AddScoped<IClienteRepository, ClienteRepository>();
             service.AddScoped<IClienteService, ClienteService>();
+            service.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            service.AddScoped<IUsuarioService, UsuarioService>();
+            service.AddScoped<IRolUsuarioRepository, RolUsuarioRepository>();
+            service.AddScoped<IRolUsuarioService, RolUsuarioService>();
+
+
 
         }
     }
