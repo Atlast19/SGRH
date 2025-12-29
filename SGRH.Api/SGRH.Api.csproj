@@ -14,4 +14,8 @@
     <ProjectReference Include="..\SGRH.Application\SGRH.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\ServiciosController\" />
+  </ItemGroup>
+
 </Project>
