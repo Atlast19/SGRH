@@ -67,9 +67,9 @@ namespace SGRH.Percistence.Repository.Usuarios
             _logger.LogInformation("Proceso para eliminar un rol");
             try
             {
-                var RolUsuario = await _dbSet.FirstOrDefaultAsync(c => c.IdRolUsuario == Id);
+                var RolUsuario = await _dbSet.FirstOrDefaultAsync(c => c.IdRolUsuario == Id && c.UsuarioEliminacion == IdUsuario);
 
-                if (RolUsuario == null || IdUsuario == null)
+                if (RolUsuario == null)
                     return result = OperationResult<RolUsuarioModel>.Failure("No se encontraron los datos");
 
                 RolUsuario.Borrado = true;
@@ -174,7 +174,7 @@ namespace SGRH.Percistence.Repository.Usuarios
                 if (modelo == null || modelo.IdRolUsuario == null || modelo.UsuarioActualizacion== null)
                     return result = OperationResult<RolUsuarioModel>.Failure("Raol no encontrado");
 
-                var RolUsuario = await _dbSet.FirstOrDefaultAsync(c => c.IdRolUsuario == modelo.IdRolUsuario);
+                var RolUsuario = await _dbSet.FirstOrDefaultAsync(c => c.IdRolUsuario == modelo.IdRolUsuario && c.UsuarioActualizacion == modelo.UsuarioActualizacion);
 
 
 

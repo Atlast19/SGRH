@@ -72,9 +72,9 @@ namespace SGRH.Percistence.Repository.Usuarios
             _logger.LogInformation("Eliminando usuario");
             try
             {
-                var usuaro = await _dbSet.FirstOrDefaultAsync(c => c.IdUsuario == Id);
+                var usuaro = await _dbSet.FirstOrDefaultAsync(c => c.IdUsuario == Id && c.UsuarioEliminacion == IdUsuario);
 
-                if (usuaro == null || IdUsuario == null)
+                if (usuaro == null )
                     return result = OperationResult<UsuarioModel>.Failure("No se encontro el usuario a eliminar");
 
                 usuaro.Estado = false;
@@ -186,7 +186,7 @@ namespace SGRH.Percistence.Repository.Usuarios
                 if (modelo == null || modelo.IdUsuario <= 0 || modelo.UsuarioActualizacion <= 0)
                     return result = OperationResult<UsuarioModel>.Failure("Datos a Actualizar no encontrados");
 
-                var usuairo = await _dbSet.FirstOrDefaultAsync(c => c.IdUsuario == modelo.IdUsuario);
+                var usuairo = await _dbSet.FirstOrDefaultAsync(c => c.IdUsuario == modelo.IdUsuario && c.UsuarioActualizacion == modelo.UsuarioActualizacion);
 
 
                 usuairo.NombreCompleto = modelo.NombreCompleto;
