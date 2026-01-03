@@ -67,7 +67,7 @@ namespace SGRH.Percistence.Repository.Usuarios
             _logger.LogInformation("Proceso para eliminar un rol");
             try
             {
-                var RolUsuario = await _dbSet.FirstOrDefaultAsync(c => c.IdRolUsuario == Id && c.UsuarioEliminacion == IdUsuario);
+                var RolUsuario = await _dbSet.FirstOrDefaultAsync(c => c.IdRolUsuario == Id || c.UsuarioEliminacion == IdUsuario);
 
                 if (RolUsuario == null)
                     return result = OperationResult<RolUsuarioModel>.Failure("No se encontraron los datos");
@@ -80,7 +80,7 @@ namespace SGRH.Percistence.Repository.Usuarios
                 _dbSet.Update(RolUsuario);
                 await _context.SaveChangesAsync();
 
-                result = OperationResult<RolUsuarioModel>.Succes("Rol del usuario eliminado correctamente", RolUsuario);
+                result = OperationResult<RolUsuarioModel>.Succes("Rol del usuario eliminado correctamente");
                 _logger.LogInformation("Rol eliminado correctamente");
             }
             catch (Exception e) 
@@ -174,7 +174,7 @@ namespace SGRH.Percistence.Repository.Usuarios
                 if (modelo == null || modelo.IdRolUsuario == null || modelo.UsuarioActualizacion== null)
                     return result = OperationResult<RolUsuarioModel>.Failure("Raol no encontrado");
 
-                var RolUsuario = await _dbSet.FirstOrDefaultAsync(c => c.IdRolUsuario == modelo.IdRolUsuario && c.UsuarioActualizacion == modelo.UsuarioActualizacion);
+                var RolUsuario = await _dbSet.FirstOrDefaultAsync(c => c.IdRolUsuario == modelo.IdRolUsuario || c.UsuarioActualizacion == modelo.UsuarioActualizacion);
 
 
 
@@ -185,7 +185,7 @@ namespace SGRH.Percistence.Repository.Usuarios
                 _dbSet.Update(RolUsuario);
                 await _context.SaveChangesAsync();
 
-                result = OperationResult<RolUsuarioModel>.Succes("Datos Actualizados correctamente", RolUsuario);
+                result = OperationResult<RolUsuarioModel>.Succes("Datos Actualizados correctamente");
                 _logger.LogInformation("Datos actualizados correctamente");
             }
             catch (Exception e)

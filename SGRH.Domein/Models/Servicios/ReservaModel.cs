@@ -28,6 +28,6 @@ namespace SGRH.Domein.Models.Servicios
 
         public decimal CostoPenalidad { get; set; }
 
-        public string Observacion { get; set; }
+        public string? Observacion { get; set; }
     }
 }

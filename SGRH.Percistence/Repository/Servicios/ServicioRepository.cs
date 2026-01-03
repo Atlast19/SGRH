@@ -29,11 +29,11 @@ namespace SGRH.Percistence.Repository.Servicios
             {
                 var servicio = new Servicio
                 {
-                    IdServicio = modelo.IdServicio,
                     Nombre = modelo.Nombre,
                     Descripcion = modelo.Descripcion,
                     UsuarioCreacion = modelo.UsuarioCreacion,
-                    FechaCreacion = DateTime.Now
+                    FechaCreacion = DateTime.Now,
+                    Estado = true
                 };
 
                 _dbSet.AddAsync(servicio);
@@ -41,11 +41,12 @@ namespace SGRH.Percistence.Repository.Servicios
 
                 var servicioModel = new ServicioModel
                 {
-                    IdServicio = modelo.IdServicio,
+                    
                     Nombre = modelo.Nombre,
                     Descripcion = modelo.Descripcion,
                     UsuarioCreacion = modelo.UsuarioCreacion,
-                    FechaCreacion = DateTime.Now
+                    FechaCreacion = DateTime.Now,
+                    Estado = true
                 };
 
                 result = OperationResult<ServicioModel>.Succes("Servicio creado correctamente", servicioModel);
@@ -67,7 +68,7 @@ namespace SGRH.Percistence.Repository.Servicios
 
             try
             {
-                var servicio = await _dbSet.FirstOrDefaultAsync(c => c.IdServicio == Id && c.UsuarioActualizacion == IdUsuario);
+                var servicio = await _dbSet.FirstOrDefaultAsync(c => c.IdServicio == Id || c.UsuarioActualizacion == IdUsuario);
 
                 if (servicio == null)
                     return result = OperationResult<ServicioModel>.Failure("No se encontralos los datos a eliminar");
@@ -80,7 +81,7 @@ namespace SGRH.Percistence.Repository.Servicios
                 _dbSet.Update(servicio);
                 await _context.SaveChangesAsync();
 
-                result = OperationResult<ServicioModel>.Succes("Datos eliminados correctamente", servicio);
+                result = OperationResult<ServicioModel>.Succes("Datos eliminados correctamente");
                 _logger.LogInformation("Datos eliminados correctamente");
             }
             catch (Exception e) 
@@ -180,6 +181,7 @@ namespace SGRH.Percistence.Repository.Servicios
                 var servicio = await _dbSet.FirstOrDefaultAsync(c => c.IdServicio == modelo.IdServicio || c.UsuarioActualizacion == modelo.UsuarioActualizacion);
 
                 servicio.IdServicio = modelo.IdServicio;
+                servicio.Nombre = modelo.Nombre;
                 servicio.Descripcion = modelo.Descripcion;
 
                 servicio.FechaActualizacion = DateTime.Now;
@@ -188,7 +190,7 @@ namespace SGRH.Percistence.Repository.Servicios
                 _dbSet.Update(servicio);
                 await _context.SaveChangesAsync();
 
-                result = OperationResult<ServicioModel>.Succes("Datos actualizados correctamente", servicio);
+                result = OperationResult<ServicioModel>.Succes("Datos actualizados correctamente");
                 _logger.LogInformation("Datos actualizados correctamente");
             }
             catch (Exception e) 

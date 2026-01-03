@@ -69,7 +69,7 @@ namespace SGRH.Percistence.Repository.Usuario
 
             try
             {
-                var cliente = await _dbSet.FirstOrDefaultAsync(c => c.IdCliente == Id && c.UsuarioEliminacion == IdUsuario);
+                var cliente = await _dbSet.FirstOrDefaultAsync(c => c.IdCliente == Id || c.UsuarioEliminacion == IdUsuario);
 
                 if (cliente == null)
                     result = OperationResult<ClienteModel>.Failure("Datos no encontrados");
@@ -83,7 +83,7 @@ namespace SGRH.Percistence.Repository.Usuario
                  _dbSet.Update(cliente);
                  await _context.SaveChangesAsync();
 
-                result = OperationResult<ClienteModel>.Succes("Datos eliminados corectamente", cliente);
+                result = OperationResult<ClienteModel>.Succes("Datos eliminados corectamente");
 
             }
             catch (Exception e) 
@@ -177,7 +177,7 @@ namespace SGRH.Percistence.Repository.Usuario
                 if (modelo == null || modelo.IdCliente == null || modelo.UsuarioActualizacion == null)
                     return result = OperationResult<ClienteModel>.Failure("El cliente es invalido");
 
-                var cliente = await _dbSet.FirstOrDefaultAsync(c => c.IdCliente == modelo.IdCliente && c.UsuarioActualizacion == modelo.UsuarioActualizacion);
+                var cliente = await _dbSet.FirstOrDefaultAsync(c => c.IdCliente == modelo.IdCliente || c.UsuarioActualizacion == modelo.UsuarioActualizacion);
 
                 
                 cliente.TipoDocumento = modelo.TipoDocumento;
@@ -191,7 +191,7 @@ namespace SGRH.Percistence.Repository.Usuario
                 _dbSet.Update(cliente);
                 await _context.SaveChangesAsync();
 
-                result = OperationResult<ClienteModel>.Succes("Datos Actualizados correctamente", cliente);
+                result = OperationResult<ClienteModel>.Succes("Datos Actualizados correctamente");
 
             }
             catch (Exception e)

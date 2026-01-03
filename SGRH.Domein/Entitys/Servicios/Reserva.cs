@@ -31,6 +31,6 @@ public sealed class Reserva : BaseEntity
 
     public decimal CostoPenalidad { get; set; }
 
-    public string Observacion { get; set; }
+    public string? Observacion { get; set; }
 
 }

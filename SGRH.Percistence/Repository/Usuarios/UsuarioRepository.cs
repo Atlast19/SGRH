@@ -72,7 +72,7 @@ namespace SGRH.Percistence.Repository.Usuarios
             _logger.LogInformation("Eliminando usuario");
             try
             {
-                var usuaro = await _dbSet.FirstOrDefaultAsync(c => c.IdUsuario == Id && c.UsuarioEliminacion == IdUsuario);
+                var usuaro = await _dbSet.FirstOrDefaultAsync(c => c.IdUsuario == Id || c.UsuarioEliminacion == IdUsuario);
 
                 if (usuaro == null )
                     return result = OperationResult<UsuarioModel>.Failure("No se encontro el usuario a eliminar");
@@ -85,7 +85,7 @@ namespace SGRH.Percistence.Repository.Usuarios
                 _dbSet.Update(usuaro);
                 await _context.SaveChangesAsync();
 
-                result = OperationResult<UsuarioModel>.Succes("Usuario eliminado correctamente", usuaro);
+                result = OperationResult<UsuarioModel>.Succes("Usuario eliminado correctamente");
                 _logger.LogInformation("Usuario eliminado correctamente");
 
             }
@@ -183,10 +183,10 @@ namespace SGRH.Percistence.Repository.Usuarios
             _logger.LogInformation("Proceso para actualizar un usuario");
             try
             {
-                if (modelo == null || modelo.IdUsuario <= 0 || modelo.UsuarioActualizacion <= 0)
+                if (modelo == null || modelo.IdUsuario == null || modelo.UsuarioActualizacion == null)
                     return result = OperationResult<UsuarioModel>.Failure("Datos a Actualizar no encontrados");
 
-                var usuairo = await _dbSet.FirstOrDefaultAsync(c => c.IdUsuario == modelo.IdUsuario && c.UsuarioActualizacion == modelo.UsuarioActualizacion);
+                var usuairo = await _dbSet.FirstOrDefaultAsync(c => c.IdUsuario == modelo.IdUsuario || c.UsuarioActualizacion == modelo.UsuarioActualizacion);
 
 
                 usuairo.NombreCompleto = modelo.NombreCompleto;
@@ -199,7 +199,7 @@ namespace SGRH.Percistence.Repository.Usuarios
                 _dbSet.Update(usuairo);
                 await _context.SaveChangesAsync();
 
-                result = OperationResult<UsuarioModel>.Succes("Usuario actualizado correctamente",usuairo);
+                result = OperationResult<UsuarioModel>.Succes("Usuario actualizado correctamente");
                 _logger.LogInformation("Usuario actualizado correctamente");
             }
             catch (Exception e) 

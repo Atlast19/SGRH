@@ -28,9 +28,8 @@ namespace SGRH.Percistence.Repository.Servicios
 
             try
             {
-                var reserva = new Reserva 
+                var reserva = new Reserva
                 {
-                    IdReserva = modelo.IdReserva,
                     IdCliente = modelo.IdCliente,
                     IdHabitacion = modelo.IdHabitacion,
                     FechaEntrada = modelo.FechaEntrada,
@@ -43,6 +42,7 @@ namespace SGRH.Percistence.Repository.Servicios
                     CostoPenalidad = modelo.CostoPenalidad,
                     Observacion = modelo.Observacion,
                     FechaCreacion = DateTime.Now,
+                    Estado = true,
                     UsuarioCreacion = modelo.UsuarioCreacion,
                     FechaEliminado = modelo.FechaEliminado,
                     UsuarioActualizacion = modelo.UsuarioActualizacion,
@@ -52,9 +52,8 @@ namespace SGRH.Percistence.Repository.Servicios
                 _dbSet.AddAsync(reserva);
                 await _context.SaveChangesAsync();
 
-                var reservaModel = new ReservaModel 
+                var reservaModel = new ReservaModel
                 {
-                    IdReserva = modelo.IdReserva,
                     IdCliente = modelo.IdCliente,
                     IdHabitacion = modelo.IdHabitacion,
                     FechaEntrada = modelo.FechaEntrada,
@@ -67,6 +66,7 @@ namespace SGRH.Percistence.Repository.Servicios
                     CostoPenalidad = modelo.CostoPenalidad,
                     Observacion = modelo.Observacion,
                     FechaCreacion = DateTime.Now,
+                    Estado = true,
                     UsuarioCreacion = modelo.UsuarioCreacion,
                     FechaEliminado = modelo.FechaEliminado,
                     UsuarioActualizacion = modelo.UsuarioActualizacion,
@@ -91,7 +91,7 @@ namespace SGRH.Percistence.Repository.Servicios
             _logger.LogInformation("Procesa para eliminar una reserva");
             try
             {
-                var reserva = await _dbSet.FirstOrDefaultAsync(c => c.IdReserva == Id && c.UsuarioActualizacion == IdUsuario);
+                var reserva = await _dbSet.FirstOrDefaultAsync(c => c.IdReserva == Id || c.UsuarioActualizacion == IdUsuario);
 
                 if (reserva == null)
                     return result = OperationResult<ReservaModel>.Failure("No se encontraron los datos a eliminar");
@@ -105,7 +105,7 @@ namespace SGRH.Percistence.Repository.Servicios
                 _dbSet.Update(reserva);
                 await _context.SaveChangesAsync();
 
-                result = OperationResult<ReservaModel>.Succes("Datos eliminados correctamente", reserva);
+                result = OperationResult<ReservaModel>.Succes("Datos eliminados correctamente");
                 _logger.LogInformation("Reserva eliminada correctamente");
             }
             catch (Exception e) 
@@ -126,7 +126,7 @@ namespace SGRH.Percistence.Repository.Servicios
             {
                 var reserva = await _dbSet.ToListAsync();
 
-                var reservaModel = reserva.Select(modelo => new ReservaModel 
+                var reservaModel = reserva.Select(modelo => new ReservaModel
                 {
                     IdReserva = modelo.IdReserva,
                     IdCliente = modelo.IdCliente,
@@ -144,7 +144,8 @@ namespace SGRH.Percistence.Repository.Servicios
                     UsuarioCreacion = modelo.UsuarioCreacion,
                     FechaEliminado = modelo.FechaEliminado,
                     UsuarioActualizacion = modelo.UsuarioActualizacion,
-                    FechaActualizacion = modelo.FechaActualizacion
+                    FechaActualizacion = modelo.FechaActualizacion,
+                    Estado = modelo.Estado
                 });
 
                 if (reservaModel == null)
@@ -217,7 +218,7 @@ namespace SGRH.Percistence.Repository.Servicios
                 if (modelo == null || modelo.IdReserva == null || modelo.UsuarioActualizacion == null)
                     return result = OperationResult<ReservaModel>.Failure("No se encontraron los datos");
 
-                var reserva = await _dbSet.FirstOrDefaultAsync(c => c.IdReserva == modelo.IdReserva && c.UsuarioActualizacion == modelo.UsuarioActualizacion);
+                var reserva = await _dbSet.FirstOrDefaultAsync(c => c.IdReserva == modelo.IdReserva || c.UsuarioActualizacion == modelo.UsuarioActualizacion);
 
                     reserva.IdCliente = modelo.IdCliente;
                     reserva.IdHabitacion = modelo.IdHabitacion;
@@ -237,7 +238,7 @@ namespace SGRH.Percistence.Repository.Servicios
                 _dbSet.Update(reserva);
                 await _context.SaveChangesAsync();
 
-                result = OperationResult<ReservaModel>.Succes("Datos actaulizados correctamente", reserva);
+                result = OperationResult<ReservaModel>.Succes("Datos actaulizados correctamente");
                 _logger.LogInformation("Datos actualizados correctamente");
             }
             catch (Exception e) 
