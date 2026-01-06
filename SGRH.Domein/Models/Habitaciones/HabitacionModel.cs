@@ -4,7 +4,7 @@ using SGRH.Domein.Models.Base;
 
 namespace SGRH.Domein.Models.Habitaciones
 {
-    public class HbitacionModel : BaseModel
+    public class HabitacionModel : BaseModel
     {
         public int IdHabitacion { get; set; }
 

@@ -53,12 +53,13 @@ namespace SGRH.Percistence.Repository.Usuario
                 };
 
                 result = OperationResult<ClienteModel>.Succes("Datos Agregados correctamente" + clienteModel);
-
+                _logger.LogInformation("Datos agregados correctamente");
 
             }
             catch (Exception e) 
             {
                 result = OperationResult<ClienteModel>.Failure("Error ingresando los datos" + e.Message);
+                _logger.LogError("Error ingresando los datos" + e.Message);
             }
             return result;
         }

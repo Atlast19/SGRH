@@ -5,7 +5,7 @@ using SGRH.Domein.Models.Habitaciones;
 
 namespace SGRH.Domein.Interfaces.Habitaciones
 {
-    public interface IHabitacionRepository : IBaseInterface<HbitacionModel>
+    public interface IHabitacionRepository : IBaseInterface<HabitacionModel>
     {
     }
 }
