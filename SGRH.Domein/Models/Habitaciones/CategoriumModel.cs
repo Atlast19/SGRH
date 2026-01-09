@@ -9,8 +9,6 @@ namespace SGRH.Domein.Models.Habitaciones
 
         public string Descripcion { get; set; }
 
-        public bool? Estado { get; set; }
-
         public int IdServicio { get; set; }
     }
 }
