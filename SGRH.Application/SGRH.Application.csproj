@@ -11,8 +11,4 @@
     <ProjectReference Include="..\SGRH.Percistence\SGRH.Percistence.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\habitacion\" />
-  </ItemGroup>
-
 </Project>
