@@ -5,7 +5,7 @@ using SGRH.Domein.Models.Servicios;
 namespace SGRH.Api.Controllers.ServiciosController
 {
     [ApiController]
-    [Route("Api/[Controller]")]
+    [Route("Api/[controller]")]
     public class ServicioController : Controller
     {
         private readonly IServicioService _service;

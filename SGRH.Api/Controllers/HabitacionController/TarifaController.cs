@@ -1,74 +1,83 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SGRH.Application.Interfaces.Usuarios;
-using SGRH.Domein.Models.Usuarios;
+using SGRH.Application.Interfaces.habitacion;
+using SGRH.Domein.Models.Habitaciones;
 
-namespace SGRH.Api.Controllers.UsuariosController
+namespace SGRH.Api.Controllers.HabitacionController
 {
     [ApiController]
     [Route("Api/[controller]")]
-    public class UsuarioController : Controller
+    public class TarifaController : Controller
     {
-        private readonly IUsuarioService _service;
+        private readonly ITarifaService _service;
 
-        public UsuarioController(IUsuarioService service)
+        public TarifaController(ITarifaService service)
         {
             _service = service;
         }
 
-        [HttpPost("CreateUssuario")]
-        public async Task<IActionResult> Create(UsuarioModel model) 
+        [HttpPost("CreateTarifa")]
+        public async Task<IActionResult> create(TarifaModel modelo)
         {
-            var result = await _service.CreateAsync(model);
+            var result = await _service.CreateAsync(modelo);
 
             if (!result.IsSucces)
                 return BadRequest(result);
+
 
             return Ok(result);
         }
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll() 
+
+        public async Task<IActionResult> GetAll()
         {
             var result = await _service.GetAllAsync();
 
-            if(!result.IsSucces)
+            if (!result.IsSucces)
                 return BadRequest(result);
+
 
             return Ok(result);
         }
 
         [HttpGet("GetById")]
-        public async Task<IActionResult> GetById(int Id) 
+
+        public async Task<IActionResult> GetById(int Id)
         {
             var result = await _service.GetByIdAsync(Id);
 
             if (!result.IsSucces)
                 return BadRequest(result);
 
+
             return Ok(result);
         }
 
-        [HttpDelete("DeleteUsuario")]
-        public async Task<IActionResult> Delete(int Id, int IdUsuario) 
+        [HttpDelete("Delete")]
+
+        public async Task<IActionResult> Delete(int id, int IdUsuario)
         {
-            var result = await _service.DeleteAsync(Id,IdUsuario);
+            var result = await _service.DeleteAsync(id, IdUsuario);
 
             if (!result.IsSucces)
                 return BadRequest(result);
 
+
             return Ok(result);
         }
 
-        [HttpPut("UpdateUsuario")]
-        public async Task<IActionResult> Update(UsuarioModel model)
+        [HttpPut("Update")]
+        public async Task<IActionResult> Update(TarifaModel modelo) 
         {
-            var result = await _service.UpdateAsync(model);
+            var result = await _service.UpdateAsync(modelo);
 
             if (!result.IsSucces)
                 return BadRequest(result);
 
+
             return Ok(result);
         }
+
 
     }
 }

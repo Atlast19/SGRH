@@ -5,8 +5,8 @@ using SGRH.Domein.Models.Usuarios;
 
 namespace SGRH.Api.Controllers.UsuariosController
 {
-    [Route("Api/[controller]")]
     [ApiController]
+    [Route("Api/[controller]")]
     public class ClienteController : Controller
     {
         private readonly IClienteService _service;

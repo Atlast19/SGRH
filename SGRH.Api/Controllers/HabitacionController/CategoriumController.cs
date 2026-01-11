@@ -1,43 +1,48 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SGRH.Application.Interfaces.Usuarios;
-using SGRH.Domein.Models.Usuarios;
+using SGRH.Application.Interfaces.habitacion;
+using SGRH.Domein.Models.Habitaciones;
 
-namespace SGRH.Api.Controllers.UsuariosController
+namespace SGRH.Api.Controllers.HabitacionController
 {
     [ApiController]
     [Route("Api/[controller]")]
-    public class UsuarioController : Controller
+    public class CategoriumController : Controller
     {
-        private readonly IUsuarioService _service;
+        private readonly ICategoriumService _service;
 
-        public UsuarioController(IUsuarioService service)
+        public CategoriumController(ICategoriumService service)
         {
             _service = service;
         }
 
-        [HttpPost("CreateUssuario")]
-        public async Task<IActionResult> Create(UsuarioModel model) 
+        [HttpPost("CreateCategorium")]
+
+        public async Task<IActionResult> Create(CategoriumModel modelo) 
         {
-            var result = await _service.CreateAsync(model);
+            var result = await _service.CreateAsync(modelo);
 
             if (!result.IsSucces)
                 return BadRequest(result);
 
+
             return Ok(result);
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet("GetAllCategorium")]
+
         public async Task<IActionResult> GetAll() 
         {
-            var result = await _service.GetAllAsync();
+            var result =  await _service.GetAllAsync();
 
-            if(!result.IsSucces)
+            if (!result.IsSucces)
                 return BadRequest(result);
+
 
             return Ok(result);
         }
 
-        [HttpGet("GetById")]
+        [HttpGet("GetCategoriumById")]
+
         public async Task<IActionResult> GetById(int Id) 
         {
             var result = await _service.GetByIdAsync(Id);
@@ -45,10 +50,12 @@ namespace SGRH.Api.Controllers.UsuariosController
             if (!result.IsSucces)
                 return BadRequest(result);
 
+
             return Ok(result);
         }
 
-        [HttpDelete("DeleteUsuario")]
+        [HttpDelete("DeleteCategorium")]
+
         public async Task<IActionResult> Delete(int Id, int IdUsuario) 
         {
             var result = await _service.DeleteAsync(Id,IdUsuario);
@@ -56,19 +63,22 @@ namespace SGRH.Api.Controllers.UsuariosController
             if (!result.IsSucces)
                 return BadRequest(result);
 
+
             return Ok(result);
         }
 
-        [HttpPut("UpdateUsuario")]
-        public async Task<IActionResult> Update(UsuarioModel model)
+        [HttpPut("UpdateCategorium")]
+
+        public async Task<IActionResult> Update(CategoriumModel modelo) 
         {
-            var result = await _service.UpdateAsync(model);
+            var result = await _service.UpdateAsync(modelo);
 
             if (!result.IsSucces)
                 return BadRequest(result);
 
+
             return Ok(result);
         }
-
     }
+
 }
