@@ -1,11 +1,11 @@
 ﻿
 
+using SGRH.Application.DTOs.Habitacion;
 using SGRH.Application.Interfaces.Base;
-using SGRH.Domein.Models.Habitaciones;
 
 namespace SGRH.Application.Interfaces.habitacion
 {
-    public interface ICategoriumService : IBaseServices<CategoriumModel>
+    public interface ICategoriumService : IBaseServices<CategoriumDTO>
     {
     }
 }

@@ -1,11 +1,10 @@
 ﻿
 
-using SGRH.Domein.Interfaces.IBaseInterface;
-using SGRH.Domein.Models.Habitaciones;
-
 namespace SGRH.Domein.Interfaces.Habitaciones
 {
-    public interface IEstadoHabitacionRepository : IBaseInterface<EstadoHabitacionModel>
+    using SGRH.Domein.Entitys;
+    using SGRH.Domein.Interfaces.IBaseInterface;
+    public interface IEstadoHabitacionRepository : IBaseInterface<EstadoHabitacion>
     { 
     }
 }

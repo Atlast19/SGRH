@@ -8,6 +8,7 @@ namespace SGRH.Domein.Entitys;
 [Table("Usuario",Schema = "usuario")]
 public sealed class Usuario : BaseEntity
 {
+
     [Key]
     public int IdUsuario { get; set; }
 
@@ -18,6 +19,5 @@ public sealed class Usuario : BaseEntity
     public int IdRolUsuario { get; set; }
 
     public string Clave { get; set; }
-
 
 }

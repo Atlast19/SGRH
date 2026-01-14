@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SGRH.Domein.Base;
 using SGRH.Domein.Entitys;
 using SGRH.Domein.Interfaces.Usuarios;
-using SGRH.Domein.Models.Usuarios;
 using SGRH.Percistence.Context;
 
 namespace SGRH.Percistence.Repository.Usuario
@@ -20,186 +18,67 @@ namespace SGRH.Percistence.Repository.Usuario
             _dbSet = context.Set<Cliente>();
         }
 
-        public async Task<OperationResult<ClienteModel>> CreateAsync(ClienteModel modelo)
+        public async Task CreateAsync(Cliente Entity)
         {
-            OperationResult<ClienteModel> result = new OperationResult<ClienteModel>();
+            _logger.LogInformation("Proceso para crear un cliente");
+            
+            await _dbSet.AddAsync(Entity);
+            await _context.SaveChangesAsync();
 
-            try
-            {
-                var cliente = new Cliente
-                {
-
-                    TipoDocumento = modelo.TipoDocumento,
-                    Documento = modelo.Documento,
-                    NombreCompleto = modelo.NombreCompleto,
-                    Correo = modelo.Correo,
-                    UsuarioCreacion = modelo.UsuarioCreacion,
-                    FechaCreacion = DateTime.Now,
-                    Estado = true
-                };
-
-                await _dbSet.AddAsync(cliente);
-                await _context.SaveChangesAsync();
-
-                var clienteModel = new ClienteModel
-                {
-                    TipoDocumento = modelo.TipoDocumento,
-                    Documento = modelo.Documento,
-                    NombreCompleto = modelo.NombreCompleto,
-                    Correo = modelo.Correo,
-                    UsuarioCreacion = modelo.UsuarioCreacion,
-                    FechaCreacion = DateTime.Now,
-                    Estado = true
-                };
-
-                result = OperationResult<ClienteModel>.Succes("Datos Agregados correctamente" + clienteModel);
-                _logger.LogInformation("Datos agregados correctamente");
-
-            }
-            catch (Exception e) 
-            {
-                result = OperationResult<ClienteModel>.Failure("Error ingresando los datos" + e.Message);
-                _logger.LogError("Error ingresando los datos" + e.Message);
-            }
-            return result;
         }
 
-        public async Task<OperationResult<ClienteModel>> DeleteAsync(int Id, int IdUsuario)
+        public async Task DeleteAsync(int Id, int IdUsuario)
         {
-            OperationResult<ClienteModel> result = new OperationResult<ClienteModel>();
 
-            try
-            {
-                var cliente = await _dbSet.FirstOrDefaultAsync(c => c.IdCliente == Id || c.UsuarioEliminacion == IdUsuario);
+            _logger.LogInformation("Proceso para eliminar un cliente");
 
-                if (cliente == null)
-                    result = OperationResult<ClienteModel>.Failure("Datos no encontrados");
+            var cliente = await _dbSet.FirstOrDefaultAsync(c => c.IdCliente == Id && !c.Borrado);
+            
+            cliente.Estado = false;
+            cliente.Borrado = true;
+            cliente.FechaEliminado = DateTime.Now;
+            cliente.UsuarioEliminacion = IdUsuario;
+
+            _dbSet.Update(cliente);
+            await _context.SaveChangesAsync();
 
 
-                cliente.Estado = false;
-                cliente.Borrado = true;
-                cliente.FechaEliminado = DateTime.Now;
-                cliente.UsuarioEliminacion = IdUsuario;
-
-                 _dbSet.Update(cliente);
-                 await _context.SaveChangesAsync();
-
-                result = OperationResult<ClienteModel>.Succes("Datos eliminados corectamente");
-
-            }
-            catch (Exception e) 
-            {
-                result = OperationResult<ClienteModel>.Failure("Error eliminando los datos" + e.Message);
-            }
-            return result;
         }
 
-        public async Task<OperationResult<IEnumerable<ClienteModel>>> GetAllAsync()
+        public async Task<IEnumerable<Cliente>> GetAllAsync()
         {
-            OperationResult<IEnumerable<ClienteModel>> result = new OperationResult<IEnumerable<ClienteModel>>();
 
-            try
-            {
-                var cliente = await _dbSet.ToListAsync();
+            _logger.LogInformation("Proceso para cargar los clientes");
+            
+            return await _dbSet.ToListAsync();
 
-                var clientes = cliente.Select(c => new ClienteModel
-                {
-                    IdCliente = c.IdCliente,
-                    TipoDocumento = c.TipoDocumento,
-                    Documento = c.Documento,
-                    NombreCompleto = c.NombreCompleto,
-                    Correo = c.Correo,
-                    Estado = c.Estado,
-                    UsuarioCreacion = c.UsuarioCreacion,
-                    FechaCreacion = c.FechaCreacion,
-                    Borrado = c.Borrado,
-                    UsuarioActualizacion = c.UsuarioActualizacion,
-                    UsuarioEliminacion = c.UsuarioEliminacion,
-                    FechaEliminado = c.FechaEliminado,
-                    FechaActualizacion = c.FechaActualizacion
-
-                });
-
-                if (clientes == null)
-                    return result = OperationResult<IEnumerable<ClienteModel>>.Failure("Error procesando los datos");
-
-                result = OperationResult<IEnumerable<ClienteModel>>.Succes("Datos procesados correctamente", clientes);
-            }
-            catch (Exception e) 
-            {
-                result = OperationResult<IEnumerable<ClienteModel>>.Failure($"Error procesando los datos: {e.Message} ");
-                _logger.LogError("Error cargando los datos" + e.Message);
-            }
-            return result;
         }
 
-        public async Task<OperationResult<ClienteModel>> GetByIdAsync(int Id)
+        public async Task<Cliente?> GetByIdAsync(int Id)
         {
-            OperationResult<ClienteModel> result = new OperationResult<ClienteModel>();
+            _logger.LogInformation("Proceso para cargar los clientes por ID");
 
-            try
-            {
-                var cliente = await _dbSet.Where(c => c.IdCliente == Id).Select(c => new ClienteModel 
-                {
-                    IdCliente = c.IdCliente,
-                    TipoDocumento = c.TipoDocumento,
-                    Documento = c.Documento,
-                    NombreCompleto = c.NombreCompleto,
-                    Correo = c.Correo,
-                    Estado = c.Estado,
-                    UsuarioCreacion = c.UsuarioCreacion,
-                    FechaCreacion = c.FechaCreacion,
-                    Borrado = c.Borrado,
-                    UsuarioActualizacion = c.UsuarioActualizacion,
-                    UsuarioEliminacion = c.UsuarioEliminacion,
-                    FechaEliminado = c.FechaEliminado,
-                    FechaActualizacion = c.FechaActualizacion
-                }).FirstOrDefaultAsync();
-
-                if (cliente == null)
-                    return result = OperationResult<ClienteModel>.Failure("Error procesando los datos");
-
-                result = OperationResult<ClienteModel>.Succes("Datos procesados correctamente", cliente);
-            }
-            catch (Exception e)
-            {
-                result = OperationResult<ClienteModel>.Failure($"Error procesando los datos: {e.Message} ");
-                _logger.LogError("Error cargando los datos" + e.Message);
-            }
-            return result;
+            return await _dbSet.FirstOrDefaultAsync(c => c.IdCliente == Id && !c.Borrado);
         }
 
-        public async Task<OperationResult<ClienteModel>> UpdateAsync(ClienteModel modelo)
+        public async Task UpdateAsync(Cliente modelo)
         {
-            OperationResult<ClienteModel> result = new OperationResult<ClienteModel>();
 
-            try
-            {
-                if (modelo == null || modelo.IdCliente == null || modelo.UsuarioActualizacion == null)
-                    return result = OperationResult<ClienteModel>.Failure("El cliente es invalido");
+            _logger.LogInformation("Proceso para actualizar un cliente");
 
-                var cliente = await _dbSet.FirstOrDefaultAsync(c => c.IdCliente == modelo.IdCliente || c.UsuarioActualizacion == modelo.UsuarioActualizacion);
+            var cliente = await _dbSet.FirstOrDefaultAsync(c => c.IdCliente == modelo.IdCliente && !c.Borrado);
+            
+            cliente.TipoDocumento = modelo.TipoDocumento;
+            cliente.Documento = modelo.Documento;
+            cliente.NombreCompleto = modelo.NombreCompleto;
+            cliente.Correo = modelo.Correo;
 
-                
-                cliente.TipoDocumento = modelo.TipoDocumento;
-                cliente.Documento = modelo.Documento;
-                cliente.NombreCompleto = modelo.NombreCompleto;
-                cliente.Correo = modelo.Correo;
+            cliente.UsuarioActualizacion = modelo.UsuarioActualizacion;
+            cliente.FechaActualizacion = DateTime.Now;
 
-                cliente.UsuarioActualizacion = modelo.UsuarioActualizacion;
-                cliente.FechaActualizacion = DateTime.Now;
+            _dbSet.Update(cliente);
+            await _context.SaveChangesAsync();
 
-                _dbSet.Update(cliente);
-                await _context.SaveChangesAsync();
-
-                result = OperationResult<ClienteModel>.Succes("Datos Actualizados correctamente");
-
-            }
-            catch (Exception e)
-            {
-                result = OperationResult<ClienteModel>.Failure("Error Actualizando los datos" + e.Message);
-            }
-            return result;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace SGRH.Api.Controllers.UsuariosController
         }
 
         [HttpPost("CreateCliente")]
-        public async Task<IActionResult> CreateCliente(ClienteModel modelo) 
+        public async Task<IActionResult> CreateCliente(ClienteDTO modelo) 
         {
             var result = await _service.CreateAsync(modelo);
 
@@ -64,7 +64,7 @@ namespace SGRH.Api.Controllers.UsuariosController
         }
 
         [HttpPut("UpdateCliente")]
-        public async Task<IActionResult> Update(ClienteModel modelo) 
+        public async Task<IActionResult> Update(ClienteDTO modelo) 
         {
             var result = await _service.UpdateAsync(modelo);
 

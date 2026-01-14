@@ -17,7 +17,7 @@ namespace SGRH.Api.Controllers.ServiciosController
 
         [HttpPost("CreateReserva")]
 
-        public async Task<IActionResult> Create(ReservaModel modelo) 
+        public async Task<IActionResult> Create(ReservaDTO modelo) 
         {
             var result = await _service.CreateAsync(modelo);
 
@@ -69,7 +69,7 @@ namespace SGRH.Api.Controllers.ServiciosController
 
         [HttpPut("UpdateReserva")]
 
-        public async Task<IActionResult> Update(ReservaModel modelo) 
+        public async Task<IActionResult> Update(ReservaDTO modelo) 
         {
             var result = await _service.UpdateAsync(modelo);
 

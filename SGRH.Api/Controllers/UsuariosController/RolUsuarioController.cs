@@ -16,7 +16,7 @@ namespace SGRH.Api.Controllers.UsuariosController
         }
 
         [HttpPost("CreateRolUsuario")]
-        public async Task<IActionResult> Create(RolUsuarioModel model)
+        public async Task<IActionResult> Create(RolUsuarioDTO model)
         {
             var result = await _service.CreateAsync(model);
 
@@ -60,7 +60,7 @@ namespace SGRH.Api.Controllers.UsuariosController
         }
 
         [HttpPut("UpdateRolUsuario")]
-        public async Task<IActionResult> Update(RolUsuarioModel model)
+        public async Task<IActionResult> Update(RolUsuarioDTO model)
         {
             var result = await _service.UpdateAsync(model);
 

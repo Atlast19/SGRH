@@ -1,11 +1,13 @@
 ﻿
 
+
+using SGRH.Application.DTOs.Usuarios;
 using SGRH.Application.Interfaces.Base;
-using SGRH.Domein.Models.Usuarios;
+
 
 namespace SGRH.Application.Interfaces.Usuarios
 {
-    public interface IClienteService : IBaseServices<ClienteModel>
+    public interface IClienteService : IBaseServices<ClienteDTO>
     {
     }
 }

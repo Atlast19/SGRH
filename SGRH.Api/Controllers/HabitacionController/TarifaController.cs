@@ -16,7 +16,7 @@ namespace SGRH.Api.Controllers.HabitacionController
         }
 
         [HttpPost("CreateTarifa")]
-        public async Task<IActionResult> create(TarifaModel modelo)
+        public async Task<IActionResult> create(TarifaDTO modelo)
         {
             var result = await _service.CreateAsync(modelo);
 
@@ -67,7 +67,7 @@ namespace SGRH.Api.Controllers.HabitacionController
         }
 
         [HttpPut("Update")]
-        public async Task<IActionResult> Update(TarifaModel modelo) 
+        public async Task<IActionResult> Update(TarifaDTO modelo) 
         {
             var result = await _service.UpdateAsync(modelo);
 

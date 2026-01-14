@@ -1,10 +1,10 @@
 ﻿
 
-using SGRH.Domein.Models.Base;
+using SGRH.Application.DTOs.Base;
 
-namespace SGRH.Domein.Models.Usuarios
+namespace SGRH.Application.DTOs.Usuarios
 {
-    public class UsuarioModel : BaseModel
+    public class UsuarioDTO : BaseDTO
     {
         public int IdUsuario { get; set; }
 

@@ -1,11 +1,11 @@
 ﻿
 
-using SGRH.Domein.Interfaces.IBaseInterface;
-using SGRH.Domein.Models.Usuarios;
+using SGRH.Application.DTOs.Usuarios;
+using SGRH.Application.Interfaces.Base;
 
 namespace SGRH.Application.Interfaces.Usuarios
 {
-    public interface IRolUsuarioService : IBaseInterface<RolUsuarioModel>
+    public interface IRolUsuarioService : IBaseServices<RolUsuarioDTO>
     {
     }
 }

@@ -1,10 +1,10 @@
-﻿using SGRH.Application.Interfaces.Base;
-using SGRH.Domein.Models.Habitaciones;
+﻿using SGRH.Application.DTOs.Habitacion;
+using SGRH.Application.Interfaces.Base;
 
 
 namespace SGRH.Application.Interfaces.habitacion
 {
-    public interface IPisoService : IBaseServices<PisoModel>
+    public interface IPisoService : IBaseServices<PisoDTO>
     {
     }
 }

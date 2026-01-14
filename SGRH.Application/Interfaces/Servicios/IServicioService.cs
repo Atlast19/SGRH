@@ -1,11 +1,11 @@
 ﻿
 
+using SGRH.Application.DTOs.Reserva;
 using SGRH.Application.Interfaces.Base;
-using SGRH.Domein.Models.Servicios;
 
 namespace SGRH.Application.Interfaces.Services
 {
-    public interface IServicioService : IBaseServices<ServicioModel>
+    public interface IServicioService : IBaseServices<ServicioDTO>
     {
     }
 }

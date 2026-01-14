@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using SGRH.Domein.Base;
 using SGRH.Domein.Entitys;
 using SGRH.Domein.Interfaces.Servicios;
-using SGRH.Domein.Models.Servicios;
 using SGRH.Percistence.Context;
 
 namespace SGRH.Percistence.Repository.Servicios
@@ -20,233 +19,74 @@ namespace SGRH.Percistence.Repository.Servicios
             _logger = logger;
             _dbSet = context.Set<Reserva>();
         }
-        public async Task<OperationResult<ReservaModel>> CreateAsync(ReservaModel modelo)
+        public async Task CreateAsync(Reserva Entity)
         {
-            OperationResult<ReservaModel> result = new OperationResult<ReservaModel>();
 
             _logger.LogInformation("Proceso para crear una reserva");
+            
+            await _dbSet.AddAsync(Entity);
+            await _context.SaveChangesAsync();
 
-            try
-            {
-                var reserva = new Reserva
-                {
-                    IdCliente = modelo.IdCliente,
-                    IdHabitacion = modelo.IdHabitacion,
-                    FechaEntrada = modelo.FechaEntrada,
-                    FechaSalida = modelo.FechaSalida,
-                    FechaSalidaConfirmacion = modelo.FechaSalidaConfirmacion,
-                    PrecioInicial = modelo.PrecioInicial,
-                    Adelanto = modelo.Adelanto,
-                    PrecioRestante = modelo.PrecioRestante,
-                    TotalPagado = modelo.TotalPagado,
-                    CostoPenalidad = modelo.CostoPenalidad,
-                    Observacion = modelo.Observacion,
-                    FechaCreacion = DateTime.Now,
-                    Estado = true,
-                    UsuarioCreacion = modelo.UsuarioCreacion,
-                    FechaEliminado = modelo.FechaEliminado,
-                    UsuarioActualizacion = modelo.UsuarioActualizacion,
-                    FechaActualizacion = modelo.FechaActualizacion
-                };
-
-                _dbSet.AddAsync(reserva);
-                await _context.SaveChangesAsync();
-
-                var reservaModel = new ReservaModel
-                {
-                    IdCliente = modelo.IdCliente,
-                    IdHabitacion = modelo.IdHabitacion,
-                    FechaEntrada = modelo.FechaEntrada,
-                    FechaSalida = modelo.FechaSalida,
-                    FechaSalidaConfirmacion = modelo.FechaSalidaConfirmacion,
-                    PrecioInicial = modelo.PrecioInicial,
-                    Adelanto = modelo.Adelanto,
-                    PrecioRestante = modelo.PrecioRestante,
-                    TotalPagado = modelo.TotalPagado,
-                    CostoPenalidad = modelo.CostoPenalidad,
-                    Observacion = modelo.Observacion,
-                    FechaCreacion = DateTime.Now,
-                    Estado = true,
-                    UsuarioCreacion = modelo.UsuarioCreacion,
-                    FechaEliminado = modelo.FechaEliminado,
-                    UsuarioActualizacion = modelo.UsuarioActualizacion,
-                    FechaActualizacion = modelo.FechaActualizacion
-                };
-
-                result = OperationResult<ReservaModel>.Succes("Reserva creada correctamente", reservaModel);
-                _logger.LogInformation("Reserva creada correctamente");
-            }
-            catch (Exception e) 
-            {
-                result = OperationResult<ReservaModel>.Failure("Error al crear una reserva" + e.Message);
-                _logger.LogError("Error al crear una reserva" + e.Message);
-            }
-            return result;
         }
 
-        public async Task<OperationResult<ReservaModel>> DeleteAsync(int Id, int IdUsuario)
+        public async Task DeleteAsync(int Id, int IdUsuario)
         {
-            OperationResult<ReservaModel> result = new OperationResult<ReservaModel>();
 
             _logger.LogInformation("Procesa para eliminar una reserva");
-            try
-            {
-                var reserva = await _dbSet.FirstOrDefaultAsync(c => c.IdReserva == Id || c.UsuarioActualizacion == IdUsuario);
 
-                if (reserva == null)
-                    return result = OperationResult<ReservaModel>.Failure("No se encontraron los datos a eliminar");
+            var reserva = await _dbSet.FirstOrDefaultAsync(c => c.IdReserva == Id && !c.Borrado);
 
+            reserva.Estado = false;
+            reserva.Borrado = true;
+            reserva.FechaEliminado = DateTime.Now;
+            reserva.UsuarioEliminacion = IdUsuario;
 
-                reserva.Estado = false;
-                reserva.Borrado = true;
-                reserva.FechaEliminado = DateTime.Now;
-                reserva.UsuarioEliminacion = IdUsuario;
+            _dbSet.Update(reserva);
+            await _context.SaveChangesAsync();
 
-                _dbSet.Update(reserva);
-                await _context.SaveChangesAsync();
-
-                result = OperationResult<ReservaModel>.Succes("Datos eliminados correctamente");
-                _logger.LogInformation("Reserva eliminada correctamente");
-            }
-            catch (Exception e) 
-            {
-                result = OperationResult<ReservaModel>.Failure("Error eliminando los datos" + e.Message);
-                _logger.LogError("Error eliminando los datos" + e.Message);
-            }
-            return result;
         }
 
-        public async Task<OperationResult<IEnumerable<ReservaModel>>> GetAllAsync()
+        public async Task<IEnumerable<Reserva>> GetAllAsync()
         {
-            OperationResult<IEnumerable<ReservaModel>> result = new OperationResult<IEnumerable<ReservaModel>>();
 
             _logger.LogInformation("Proceso para cargar todos los datos de la reserva");
-
-            try
-            {
-                var reserva = await _dbSet.ToListAsync();
-
-                var reservaModel = reserva.Select(modelo => new ReservaModel
-                {
-                    IdReserva = modelo.IdReserva,
-                    IdCliente = modelo.IdCliente,
-                    IdHabitacion = modelo.IdHabitacion,
-                    FechaEntrada = modelo.FechaEntrada,
-                    FechaSalida = modelo.FechaSalida,
-                    FechaSalidaConfirmacion = modelo.FechaSalidaConfirmacion,
-                    PrecioInicial = modelo.PrecioInicial,
-                    Adelanto = modelo.Adelanto,
-                    PrecioRestante = modelo.PrecioRestante,
-                    TotalPagado = modelo.TotalPagado,
-                    CostoPenalidad = modelo.CostoPenalidad,
-                    Observacion = modelo.Observacion,
-                    FechaCreacion = modelo.FechaCreacion,
-                    UsuarioCreacion = modelo.UsuarioCreacion,
-                    FechaEliminado = modelo.FechaEliminado,
-                    UsuarioActualizacion = modelo.UsuarioActualizacion,
-                    FechaActualizacion = modelo.FechaActualizacion,
-                    Estado = modelo.Estado
-                });
-
-                if (reservaModel == null)
-                    return result = OperationResult<IEnumerable<ReservaModel>>.Failure("No se encontralos los datos");
-
-                result = OperationResult<IEnumerable<ReservaModel>>.Succes("Datos cargados correctamente", reservaModel);
-                _logger.LogInformation("Datos cargados correctamente");
-            }
-            catch (Exception e) 
-            {
-                result = OperationResult<IEnumerable<ReservaModel>>.Failure("Error Cargando los datos" + e.Message);
-                _logger.LogError("Error cargando los datos");
-            }
-            return result;
+            
+            return await _dbSet.ToListAsync();
         }
 
-        public async Task<OperationResult<ReservaModel>> GetByIdAsync(int Id)
+        public async Task<Reserva?> GetByIdAsync(int Id)
         {
-            OperationResult<ReservaModel> result = new OperationResult<ReservaModel>();
 
             _logger.LogInformation("Proceso para cargar la reserva por ID");
 
-            try
-            {
-                var reserva = await _dbSet.Where(c => c.IdReserva == Id).Select(modelo => new ReservaModel
-                {
-                    IdReserva = modelo.IdReserva,
-                    IdCliente = modelo.IdCliente,
-                    IdHabitacion = modelo.IdHabitacion,
-                    FechaEntrada = modelo.FechaEntrada,
-                    FechaSalida = modelo.FechaSalida,
-                    FechaSalidaConfirmacion = modelo.FechaSalidaConfirmacion,
-                    PrecioInicial = modelo.PrecioInicial,
-                    Adelanto = modelo.Adelanto,
-                    PrecioRestante = modelo.PrecioRestante,
-                    TotalPagado = modelo.TotalPagado,
-                    CostoPenalidad = modelo.CostoPenalidad,
-                    Observacion = modelo.Observacion,
-                    Estado = modelo.Estado,
-                    Borrado = modelo.Borrado,
-                    FechaCreacion = modelo.FechaCreacion,
-                    UsuarioCreacion = modelo.UsuarioCreacion,
-                    FechaEliminado = modelo.FechaEliminado,
-                    UsuarioActualizacion = modelo.UsuarioActualizacion,
-                    FechaActualizacion = modelo.FechaActualizacion
-                }).FirstOrDefaultAsync();
-
-                if (reserva == null)
-                    return result = OperationResult<ReservaModel>.Failure("Datos no encontrados");
-
-                result = OperationResult<ReservaModel>.Succes("Datos cargados correctamente",reserva);
-                _logger.LogInformation("Datos cargados correctamente");
-            }
-            catch (Exception e) 
-            {
-                result = OperationResult<ReservaModel>.Failure("Error cargando los datos" + e.Message);
-                _logger.LogError("Error cargando los datos" + e.Message);
-            }
-            return result;
+            return await _dbSet.FirstOrDefaultAsync(c => c.IdReserva == Id && !c.Borrado);
         }
 
-        public async Task<OperationResult<ReservaModel>> UpdateAsync(ReservaModel modelo)
+        public async Task UpdateAsync(Reserva Entity)
         {
-            OperationResult<ReservaModel> result = new OperationResult<ReservaModel>();
 
             _logger.LogInformation("Proceso para actualizar una reserva");
+            
+            var reserva = await _dbSet.FirstOrDefaultAsync(c => c.IdReserva == Entity.IdReserva && !c.Borrado);
 
-            try
-            {
-                if (modelo == null || modelo.IdReserva == null || modelo.UsuarioActualizacion == null)
-                    return result = OperationResult<ReservaModel>.Failure("No se encontraron los datos");
+                    reserva.IdCliente = Entity.IdCliente;
+                    reserva.IdHabitacion = Entity.IdHabitacion;
+                    reserva.FechaEntrada = Entity.FechaEntrada;
+                    reserva.FechaSalida = Entity.FechaSalida;
+                    reserva.FechaSalidaConfirmacion = Entity.FechaSalidaConfirmacion;
+                    reserva.PrecioInicial = Entity.PrecioInicial;
+                    reserva.Adelanto = Entity.Adelanto;
+                    reserva.PrecioRestante = Entity.PrecioRestante;
+                    reserva.TotalPagado = Entity.TotalPagado;
+                    reserva.CostoPenalidad = Entity.CostoPenalidad;
+                    reserva.Observacion = Entity.Observacion;
 
-                var reserva = await _dbSet.FirstOrDefaultAsync(c => c.IdReserva == modelo.IdReserva || c.UsuarioActualizacion == modelo.UsuarioActualizacion);
-
-                    reserva.IdCliente = modelo.IdCliente;
-                    reserva.IdHabitacion = modelo.IdHabitacion;
-                    reserva.FechaEntrada = modelo.FechaEntrada;
-                    reserva.FechaSalida = modelo.FechaSalida;
-                    reserva.FechaSalidaConfirmacion = modelo.FechaSalidaConfirmacion;
-                    reserva.PrecioInicial = modelo.PrecioInicial;
-                    reserva.Adelanto = modelo.Adelanto;
-                    reserva.PrecioRestante = modelo.PrecioRestante;
-                    reserva.TotalPagado = modelo.TotalPagado;
-                    reserva.CostoPenalidad = modelo.CostoPenalidad;
-                    reserva.Observacion = modelo.Observacion;
-
-                    modelo.UsuarioActualizacion = modelo.UsuarioActualizacion;
-                    modelo.FechaActualizacion = DateTime.Now;
+                    reserva.UsuarioActualizacion = Entity.UsuarioActualizacion;
+                    reserva.FechaActualizacion = DateTime.Now;
 
                 _dbSet.Update(reserva);
                 await _context.SaveChangesAsync();
 
-                result = OperationResult<ReservaModel>.Succes("Datos actaulizados correctamente");
-                _logger.LogInformation("Datos actualizados correctamente");
-            }
-            catch (Exception e) 
-            {
-                result = OperationResult<ReservaModel>.Failure("Error actualizando los datos" + e.Message);
-                _logger.LogError("Error cargando los datos" + e.Message);
-            }
-            return result;
         }
     }
 }

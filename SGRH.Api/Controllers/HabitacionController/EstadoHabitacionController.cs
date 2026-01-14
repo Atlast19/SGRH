@@ -17,7 +17,7 @@ namespace SGRH.Api.Controllers.HabitacionController
 
         [HttpPost("CreateEstadoHabitacion")]
 
-        public async Task<IActionResult> Creat(EstadoHabitacionModel modelo) 
+        public async Task<IActionResult> Creat(EstadoHabitacionDTO modelo) 
         {
             var result = await _service.CreateAsync(modelo);
 
@@ -69,7 +69,7 @@ namespace SGRH.Api.Controllers.HabitacionController
 
         [HttpPut("UpdateEstadoHabitacion")]
 
-        public async Task<IActionResult> Update(EstadoHabitacionModel modelo) 
+        public async Task<IActionResult> Update(EstadoHabitacionDTO modelo) 
         {
             var result = await _service.UpdateAsync(modelo);
 

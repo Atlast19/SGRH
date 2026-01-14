@@ -1,9 +1,9 @@
 ﻿
 
+using SGRH.Application.DTOs.Usuarios;
 using SGRH.Application.Interfaces.Usuarios;
 using SGRH.Domein.Base;
 using SGRH.Domein.Interfaces.Usuarios;
-using SGRH.Domein.Models.Usuarios;
 
 namespace SGRH.Application.Services.Usuarios
 {
@@ -16,29 +16,29 @@ namespace SGRH.Application.Services.Usuarios
             _repository = repository;
         }
 
-        public async Task<OperationResult<ClienteModel>> CreateAsync(ClienteModel modelo)
+        public Task<OperationResult<ClienteDTO>> CreateAsync(ClienteDTO modelo)
         {
-            return await _repository.CreateAsync(modelo);
+            throw new NotImplementedException();
         }
 
-        public async Task<OperationResult<ClienteModel>> DeleteAsync(int Id, int IdUsuario)
+        public Task<OperationResult<ClienteDTO>> DeleteAsync(int Id, int IdUsuario)
         {
-            return await _repository.DeleteAsync(Id, IdUsuario);
+            throw new NotImplementedException();
         }
 
-        public async Task<OperationResult<IEnumerable<ClienteModel>>> GetAllAsync()
+        public Task<OperationResult<IEnumerable<ClienteDTO>>> GetAllAsync()
         {
-            return await _repository.GetAllAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<OperationResult<ClienteModel>> GetByIdAsync(int Id)
+        public Task<OperationResult<ClienteDTO>> GetByIdAsync(int Id)
         {
-            return await _repository.GetByIdAsync(Id);
+            throw new NotImplementedException();
         }
 
-        public async Task<OperationResult<ClienteModel>> UpdateAsync(ClienteModel modelo)
+        public Task<OperationResult<ClienteDTO>> UpdateAsync(ClienteDTO modelo)
         {
-            return await _repository.UpdateAsync(modelo);
+            throw new NotImplementedException();
         }
     }
 }

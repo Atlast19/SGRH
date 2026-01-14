@@ -1,8 +1,8 @@
 ﻿
+using SGRH.Application.DTOs.Habitacion;
 using SGRH.Application.Interfaces.habitacion;
 using SGRH.Domein.Base;
 using SGRH.Domein.Interfaces.Habitaciones;
-using SGRH.Domein.Models.Habitaciones;
 
 namespace SGRH.Application.Services.habitacion
 {
@@ -14,29 +14,30 @@ namespace SGRH.Application.Services.habitacion
         {
             _repository = repository;
         }
-        public async Task<OperationResult<HabitacionModel>> CreateAsync(HabitacionModel modelo)
+
+        public Task<OperationResult<HabitacionDTO>> CreateAsync(HabitacionDTO modelo)
         {
-            return await _repository.CreateAsync(modelo);
+            throw new NotImplementedException();
         }
 
-        public async Task<OperationResult<HabitacionModel>> DeleteAsync(int Id, int IdUsuario)
+        public Task<OperationResult<HabitacionDTO>> DeleteAsync(int Id, int IdUsuario)
         {
-            return await _repository.DeleteAsync(Id,IdUsuario);
+            throw new NotImplementedException();
         }
 
-        public async Task<OperationResult<IEnumerable<HabitacionModel>>> GetAllAsync()
+        public Task<OperationResult<IEnumerable<HabitacionDTO>>> GetAllAsync()
         {
-            return await _repository.GetAllAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<OperationResult<HabitacionModel>> GetByIdAsync(int Id)
+        public Task<OperationResult<HabitacionDTO>> GetByIdAsync(int Id)
         {
-            return await _repository.GetByIdAsync(Id);
+            throw new NotImplementedException();
         }
 
-        public async Task<OperationResult<HabitacionModel>> UpdateAsync(HabitacionModel modelo)
+        public Task<OperationResult<HabitacionDTO>> UpdateAsync(HabitacionDTO modelo)
         {
-            return await _repository.UpdateAsync(modelo);
+            throw new NotImplementedException();
         }
     }
 }

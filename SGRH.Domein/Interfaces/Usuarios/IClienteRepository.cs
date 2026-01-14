@@ -1,10 +1,10 @@
 ﻿
-using SGRH.Domein.Interfaces.IBaseInterface;
-using SGRH.Domein.Models.Usuarios;
 
 namespace SGRH.Domein.Interfaces.Usuarios
 {
-    public interface IClienteRepository : IBaseInterface<ClienteModel>
+    using SGRH.Domein.Entitys;
+    using SGRH.Domein.Interfaces.IBaseInterface;
+    public interface IClienteRepository : IBaseInterface<Cliente>
     {
 
     }

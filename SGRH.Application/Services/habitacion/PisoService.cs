@@ -1,9 +1,9 @@
 ﻿
 
+using SGRH.Application.DTOs.Habitacion;
 using SGRH.Application.Interfaces.habitacion;
 using SGRH.Domein.Base;
 using SGRH.Domein.Interfaces.Habitaciones;
-using SGRH.Domein.Models.Habitaciones;
 
 namespace SGRH.Application.Services.habitacion
 {
@@ -15,29 +15,30 @@ namespace SGRH.Application.Services.habitacion
         {
             _respository = respository;
         }
-        public async Task<OperationResult<PisoModel>> CreateAsync(PisoModel modelo)
+
+        public Task<OperationResult<PisoDTO>> CreateAsync(PisoDTO modelo)
         {
-            return await _respository.CreateAsync(modelo);
+            throw new NotImplementedException();
         }
 
-        public async Task<OperationResult<PisoModel>> DeleteAsync(int Id, int IdUsuario)
+        public Task<OperationResult<PisoDTO>> DeleteAsync(int Id, int IdUsuario)
         {
-            return await _respository.DeleteAsync(Id,IdUsuario);
+            throw new NotImplementedException();
         }
 
-        public async Task<OperationResult<IEnumerable<PisoModel>>> GetAllAsync()
+        public Task<OperationResult<IEnumerable<PisoDTO>>> GetAllAsync()
         {
-            return await _respository.GetAllAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<OperationResult<PisoModel>> GetByIdAsync(int Id)
+        public Task<OperationResult<PisoDTO>> GetByIdAsync(int Id)
         {
-            return await _respository.GetByIdAsync(Id);
+            throw new NotImplementedException();
         }
 
-        public async Task<OperationResult<PisoModel>> UpdateAsync(PisoModel modelo)
+        public Task<OperationResult<PisoDTO>> UpdateAsync(PisoDTO modelo)
         {
-            return await _respository.UpdateAsync(modelo);
+            throw new NotImplementedException();
         }
     }
 }

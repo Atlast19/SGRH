@@ -1,9 +1,9 @@
 ﻿
 
+using SGRH.Application.DTOs.Habitacion;
 using SGRH.Application.Interfaces.habitacion;
 using SGRH.Domein.Base;
 using SGRH.Domein.Interfaces.Habitaciones;
-using SGRH.Domein.Models.Habitaciones;
 
 namespace SGRH.Application.Services.habitacion
 {
@@ -15,29 +15,30 @@ namespace SGRH.Application.Services.habitacion
         {
             _repository = repository;
         }
-        public async Task<OperationResult<TarifaModel>> CreateAsync(TarifaModel modelo)
+
+        public Task<OperationResult<TarifaDTO>> CreateAsync(TarifaDTO modelo)
         {
-            return await _repository.CreateAsync(modelo);
+            throw new NotImplementedException();
         }
 
-        public async Task<OperationResult<TarifaModel>> DeleteAsync(int Id, int IdUsuario)
+        public Task<OperationResult<TarifaDTO>> DeleteAsync(int Id, int IdUsuario)
         {
-            return await _repository.DeleteAsync(Id, IdUsuario);
+            throw new NotImplementedException();
         }
 
-        public async Task<OperationResult<IEnumerable<TarifaModel>>> GetAllAsync()
+        public Task<OperationResult<IEnumerable<TarifaDTO>>> GetAllAsync()
         {
-            return await _repository.GetAllAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<OperationResult<TarifaModel>> GetByIdAsync(int Id)
+        public Task<OperationResult<TarifaDTO>> GetByIdAsync(int Id)
         {
-            return await _repository.GetByIdAsync(Id);
+            throw new NotImplementedException();
         }
 
-        public async Task<OperationResult<TarifaModel>> UpdateAsync(TarifaModel modelo)
+        public Task<OperationResult<TarifaDTO>> UpdateAsync(TarifaDTO modelo)
         {
-            return await _repository.UpdateAsync(modelo);
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace SGRH.Domein.Models.Base
+﻿
+
+namespace SGRH.Application.DTOs.Base
 {
-    public abstract class BaseModel
+    public abstract class BaseDTO
     {
         public bool? Estado { get; set; }
 
