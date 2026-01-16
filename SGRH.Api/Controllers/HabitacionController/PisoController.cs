@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SGRH.Application.DTOs.Habitacion;
 using SGRH.Application.Interfaces.habitacion;
-using SGRH.Domein.Models.Habitaciones;
+
 
 namespace SGRH.Api.Controllers.HabitacionController
 {

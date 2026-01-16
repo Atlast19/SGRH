@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SGRH.Application.DTOs.Reserva;
 using SGRH.Application.Interfaces.Services;
-using SGRH.Domein.Models.Servicios;
 
 namespace SGRH.Api.Controllers.ServiciosController
 {

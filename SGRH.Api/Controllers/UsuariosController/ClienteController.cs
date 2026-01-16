@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SGRH.Application.DTOs.Usuarios;
 using SGRH.Application.Interfaces.Usuarios;
-using SGRH.Domein.Models.Usuarios;
 
 
 namespace SGRH.Api.Controllers.UsuariosController

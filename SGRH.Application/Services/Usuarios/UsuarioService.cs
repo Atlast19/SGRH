@@ -37,11 +37,19 @@ namespace SGRH.Application.Services.Usuarios
 
             var resultDto = new UsuarioDTO
             {
+                IdUsuario = usuario.IdUsuario,
                 NombreCompleto = usuario.NombreCompleto,
                 Correo = usuario.Correo,
-                IdRolUsuario = usuario.IdUsuario,
                 Clave = usuario.Clave,
-                UsuarioCreacion = usuario.UsuarioCreacion
+                IdRolUsuario = usuario.IdUsuario,
+                UsuarioCreacion = usuario.UsuarioCreacion,
+                FechaCreacion = usuario.FechaCreacion,
+                UsuarioEliminacion = usuario.UsuarioEliminacion,
+                FechaEliminado = usuario.FechaEliminado,
+                UsuarioActualizacion = usuario.UsuarioActualizacion,
+                FechaActualizacion = usuario.FechaActualizacion,
+                Borrado = usuario.Borrado,
+                Estado = usuario.Estado
             };
 
             return OperationResult<UsuarioDTO>.Succes("Categoría creada correctamente", resultDto);
@@ -61,7 +69,24 @@ namespace SGRH.Application.Services.Usuarios
 
             await _repository.UpdateAsync(usuario);
 
-            return OperationResult<UsuarioDTO>.Succes("Datos eliminados correctamente");
+            var resultDto = new UsuarioDTO
+            {
+                IdUsuario = usuario.IdUsuario,
+                NombreCompleto = usuario.NombreCompleto,
+                Correo = usuario.Correo,
+                Clave = usuario.Clave,
+                IdRolUsuario = usuario.IdUsuario,
+                UsuarioCreacion = usuario.UsuarioCreacion,
+                FechaCreacion = usuario.FechaCreacion,
+                UsuarioEliminacion = usuario.UsuarioEliminacion,
+                FechaEliminado = usuario.FechaEliminado,
+                UsuarioActualizacion = usuario.UsuarioActualizacion,
+                FechaActualizacion = usuario.FechaActualizacion,
+                Borrado = usuario.Borrado,
+                Estado = usuario.Estado
+            };
+
+            return OperationResult<UsuarioDTO>.Succes("Datos eliminados correctamente",resultDto);
         }
 
         public async Task<OperationResult<IEnumerable<UsuarioDTO>>> GetAllAsync()
@@ -77,8 +102,17 @@ namespace SGRH.Application.Services.Usuarios
                 {
                     IdUsuario = c.IdUsuario,
                     NombreCompleto = c.NombreCompleto,
+                    Clave = c.Clave,
                     Correo = c.Correo,
-                    IdRolUsuario = c.IdUsuario
+                    IdRolUsuario = c.IdUsuario,
+                    UsuarioCreacion = c.UsuarioCreacion,
+                    FechaCreacion = c.FechaCreacion,
+                    UsuarioEliminacion = c.UsuarioEliminacion,
+                    FechaEliminado = c.FechaEliminado,
+                    UsuarioActualizacion = c.UsuarioActualizacion,
+                    FechaActualizacion = c.FechaActualizacion,
+                    Borrado = c.Borrado,
+                    Estado = c.Estado
                 });
 
             return OperationResult<IEnumerable<UsuarioDTO>>.Succes("Datos cargados correctamente", dto);
@@ -97,32 +131,56 @@ namespace SGRH.Application.Services.Usuarios
                 IdUsuario = usuario.IdUsuario,
                 NombreCompleto = usuario.NombreCompleto,
                 Correo = usuario.Correo,
-                IdRolUsuario = usuario.IdUsuario
+                Clave = usuario.Clave,
+                IdRolUsuario = usuario.IdUsuario,
+                UsuarioCreacion = usuario.UsuarioCreacion,
+                FechaCreacion = usuario.FechaCreacion,
+                UsuarioEliminacion = usuario.UsuarioEliminacion,
+                FechaEliminado = usuario.FechaEliminado,
+                UsuarioActualizacion = usuario.UsuarioActualizacion,
+                FechaActualizacion = usuario.FechaActualizacion,
+                Borrado = usuario.Borrado,
+                Estado = usuario.Estado
             };
 
             return OperationResult<UsuarioDTO>.Succes("Datos cargados correctamente", dto);
         }
 
-        public async Task<OperationResult<UsuarioDTO>> UpdateAsync(UsuarioDTO modelo)
+        public async Task<OperationResult<UsuarioDTO>> UpdateAsync(UsuarioDTO dto)
         {
-            if (modelo.Borrado)
+
+            if (dto.Borrado)
                 return OperationResult<UsuarioDTO>.Failure("No se encontralos los datos a actualizar");
 
             var usuario = new Usuario();
             
-            usuario.NombreCompleto = modelo.NombreCompleto;
-            usuario.Correo = modelo.Correo;
-            usuario.IdRolUsuario = modelo.IdRolUsuario;
-            usuario.Clave = modelo.Clave;
-            usuario.UsuarioActualizacion = modelo.UsuarioActualizacion;
+            usuario.NombreCompleto = dto.NombreCompleto;
+            usuario.Correo = dto.Correo;
+            usuario.IdRolUsuario = dto.IdRolUsuario;
+            usuario.Clave = dto.Clave;
+            usuario.UsuarioActualizacion = dto.UsuarioActualizacion;
             usuario.FechaActualizacion = DateTime.Now;
-
 
             await _repository.UpdateAsync(usuario);
 
+            var resultDto = new UsuarioDTO
+            {
+                IdUsuario = usuario.IdUsuario,
+                NombreCompleto = usuario.NombreCompleto,
+                Correo = usuario.Correo,
+                Clave = usuario.Clave,
+                IdRolUsuario = usuario.IdUsuario,
+                UsuarioCreacion = usuario.UsuarioCreacion,
+                FechaCreacion = usuario.FechaCreacion,
+                UsuarioEliminacion = usuario.UsuarioEliminacion,
+                FechaEliminado = usuario.FechaEliminado,
+                UsuarioActualizacion = usuario.UsuarioActualizacion,
+                FechaActualizacion = usuario.FechaActualizacion,
+                Borrado = usuario.Borrado,
+                Estado = usuario.Estado
+            };
 
-            return OperationResult<UsuarioDTO>.Succes("Datos actualizados correctmente");
-
+            return OperationResult<UsuarioDTO>.Succes("Datos actualizados correctmente", resultDto);
 
         }
     }
