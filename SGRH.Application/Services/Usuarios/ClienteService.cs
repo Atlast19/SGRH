@@ -3,8 +3,6 @@ using SGRH.Application.Interfaces.Usuarios;
 using SGRH.Domein.Base;
 using SGRH.Domein.Entitys;
 using SGRH.Domein.Interfaces.Usuarios;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.CompilerServices;
 
 namespace SGRH.Application.Services.Usuarios
 {
@@ -61,7 +59,7 @@ namespace SGRH.Application.Services.Usuarios
 
             Cliente.Borrado = true;
             Cliente.Estado = false;
-            Cliente.UsuarioCreacion = IdUsuario;
+            Cliente.UsuarioEliminacion = IdUsuario;
             Cliente.FechaEliminado = DateTime.Now;
 
             await _repository.UpdateAsync(Cliente);
