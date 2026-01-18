@@ -141,10 +141,11 @@ namespace SGRH.Application.Services.Usuarios
 
         public async Task<OperationResult<ClienteDTO>> UpdateAsync(ClienteDTO dto)
         {
-            if (dto.Borrado)
+           var Cliente = await _repository.GetByIdAsync(dto.IdCliente);
+
+            if (Cliente == null || Cliente.Borrado)
                 return OperationResult<ClienteDTO>.Failure("No se encontraron los datos a actualizar");
 
-            var Cliente = new Cliente();
 
             Cliente.NombreCompleto = dto.NombreCompleto;
             Cliente.TipoDocumento = dto.TipoDocumento;

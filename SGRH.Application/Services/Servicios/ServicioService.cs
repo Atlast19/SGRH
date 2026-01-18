@@ -134,10 +134,11 @@ namespace SGRH.Application.Services.Servicios
 
         public async Task<OperationResult<ServicioDTO>> UpdateAsync(ServicioDTO dto)
         {
-            if (dto.Borrado)
+           var Servicio = await _repository.GetByIdAsync(dto.IdServicio);
+
+            if (Servicio == null || Servicio.Borrado)
                 return OperationResult<ServicioDTO>.Failure("No se encontraron los datos a actualizar");
 
-            var Servicio = new Servicio();
 
             Servicio.Nombre = dto.Nombre;
             Servicio.Descripcion = dto.Descripcion;

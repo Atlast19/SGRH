@@ -154,10 +154,11 @@ namespace SGRH.Application.Services.habitacion
 
         public async Task<OperationResult<HabitacionDTO>> UpdateAsync(HabitacionDTO dto)
         {
-            if (dto.Borrado)
-                return OperationResult<HabitacionDTO>.Failure("No se encontraron los datos");
 
-            var Habitacion = new Habitacion();
+            var Habitacion = await _repository.GetByIdAsync(dto.IdHabitacion);
+
+            if (Habitacion == null || Habitacion.Borrado)
+                return OperationResult<HabitacionDTO>.Failure("No se encontraron los datos");
 
             Habitacion.Numero = dto.Numero;
             Habitacion.Detalle = dto.Detalle;

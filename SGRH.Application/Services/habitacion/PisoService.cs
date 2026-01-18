@@ -127,10 +127,12 @@ namespace SGRH.Application.Services.habitacion
 
         public async Task<OperationResult<PisoDTO>> UpdateAsync(PisoDTO dto)
         {
-            if (dto.Borrado)
+
+           var Piso = await _respository.GetByIdAsync(dto.IdPiso);
+
+            if (Piso == null || Piso.Borrado)
                 return OperationResult<PisoDTO>.Failure("No se encontraron los datos a actualizar");
 
-            var Piso = new Piso();
 
             Piso.Descripcion = dto.Descripcion;
             Piso.UsuarioActualizacion = dto.UsuarioActualizacion;

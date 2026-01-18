@@ -152,10 +152,11 @@ namespace SGRH.Application.Services.habitacion
 
         public async Task<OperationResult<TarifaDTO>> UpdateAsync(TarifaDTO dto)
         {
-            if (dto.Borrado)
-                return OperationResult<TarifaDTO>.Failure("No se encontraron los datos a eliminar");
 
-            var Tarifa = new Tarifa();
+           var Tarifa =  await _repository.GetByIdAsync(dto.IdTarifa);
+
+            if (Tarifa == null || Tarifa.Borrado)
+                return OperationResult<TarifaDTO>.Failure("No se encontraron los datos a eliminar");
 
 
             Tarifa.IdHabitacion = dto.IdHabitacion;

@@ -178,10 +178,12 @@ namespace SGRH.Application.Services.Servicios
 
         public async Task<OperationResult<ReservaDTO>> UpdateAsync(ReservaDTO dto)
         {
-            if (dto.Borrado)
+
+           var Reserva = await _repository.GetByIdAsync(dto.IdReserva);
+
+            if (Reserva == null || Reserva.Borrado)
                 return OperationResult<ReservaDTO>.Failure("No se encontraro nlos datos a actualizar");
 
-            var Reserva = new Reserva();
 
             Reserva.IdCliente = dto.IdCliente;
             Reserva.IdHabitacion = dto.IdHabitacion;

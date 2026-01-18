@@ -149,11 +149,12 @@ namespace SGRH.Application.Services.Usuarios
         public async Task<OperationResult<UsuarioDTO>> UpdateAsync(UsuarioDTO dto)
         {
 
-            if (dto.Borrado)
-                return OperationResult<UsuarioDTO>.Failure("No se encontralos los datos a actualizar");
+           var usuario = await _repository.GetByIdAsync(dto.IdUsuario);
 
-            var usuario = new Usuario();
+            if (usuario == null || usuario.Borrado)
+                return OperationResult<UsuarioDTO>.Failure("No se encontralos los datos a actualizar");
             
+
             usuario.NombreCompleto = dto.NombreCompleto;
             usuario.Correo = dto.Correo;
             usuario.IdRolUsuario = dto.IdRolUsuario;

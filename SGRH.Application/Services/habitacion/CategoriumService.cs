@@ -24,7 +24,7 @@ namespace SGRH.Application.Services.habitacion
             Categoria.IdServicio = dto.IdServicio;
             Categoria.Estado = true;
             Categoria.UsuarioCreacion = dto.UsuarioCreacion;
-            Categoria.FechaActualizacion = DateTime.Now;
+            Categoria.FechaCreacion = DateTime.Now;
 
             await _repository.CreateAsync(Categoria);
 
@@ -131,15 +131,15 @@ namespace SGRH.Application.Services.habitacion
 
         public async Task<OperationResult<CategoriumDTO>> UpdateAsync(CategoriumDTO dto)
         {
-            if (dto.Borrado)
-                return OperationResult<CategoriumDTO>.Failure("No se encontraron los datos a actualizar");
 
-            var Categoria = new Categorium();
+            var Categoria = await _repository.GetByIdAsync(dto.IdCategoria);
+
+            if (Categoria == null || Categoria.Borrado)
+                return OperationResult<CategoriumDTO>.Failure("No se encontraron los datos a actualizar");
 
             Categoria.Descripcion = dto.Descripcion;
             Categoria.IdServicio = dto.IdServicio;
-            Categoria.Estado = true;
-            Categoria.UsuarioCreacion = dto.UsuarioCreacion;
+            Categoria.UsuarioActualizacion = dto.UsuarioActualizacion;
             Categoria.FechaActualizacion = DateTime.Now;
 
             await _repository.UpdateAsync(Categoria);

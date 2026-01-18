@@ -127,10 +127,11 @@ namespace SGRH.Application.Services.Usuarios
 
         public async Task<OperationResult<RolUsuarioDTO>> UpdateAsync(RolUsuarioDTO dto)
         {
-            if (dto.Borrado)
+           var RolUsuario = await _repository.GetByIdAsync(dto.IdRolUsuario);
+
+            if (RolUsuario == null || RolUsuario.Borrado)
                 return OperationResult<RolUsuarioDTO>.Failure("No se entontraron los datos");
 
-            var RolUsuario = new RolUsuario();
 
             RolUsuario.Descripcion = dto.Descripcion;
             RolUsuario.UsuarioActualizacion = dto.UsuarioActualizacion;
