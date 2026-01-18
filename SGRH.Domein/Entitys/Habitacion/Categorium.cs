@@ -9,11 +9,9 @@ namespace SGRH.Domein.Entitys;
 public sealed class Categorium : BaseEntity
 {
     [Key]
-    public int IdCategoria { get; set;   }
+    public int IdCategoria { get; set; }
 
     public string Descripcion { get; set; }
-
-    public bool? Estado { get; set; }
 
     public int IdServicio { get; set; }
 

@@ -1,6 +1,4 @@
-﻿
-
-using SGRH.Domein.Entitys.BaseEntitys;
+﻿using SGRH.Domein.Entitys.BaseEntitys;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
