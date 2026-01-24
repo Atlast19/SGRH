@@ -1,8 +1,8 @@
-﻿using SGRH.Application.DTOs.Habitacion;
+﻿using SGRH.Application.DTOs.Habitacion.CategoriumDto;
 using SGRH.Application.Interfaces.habitacion;
-using SGRH.Domein.Base;
 using SGRH.Domein.Entitys;
 using SGRH.Domein.Interfaces.Habitaciones;
+
 
 
 namespace SGRH.Application.Services.habitacion
@@ -10,13 +10,12 @@ namespace SGRH.Application.Services.habitacion
     public class CategoriumService : ICategoriumService
     {
         private readonly ICategoriumRepository _repository;
-
         public CategoriumService(ICategoriumRepository repository)
         {
             _repository = repository;
         }
 
-        public async Task<OperationResult<CategoriumDTO>> CreateAsync(CategoriumDTO dto)
+        public async Task<CreateCategoriumDto> CreateAsync(CreateCategoriumDto dto)
         {
             var Categoria = new Categorium();
 
@@ -28,30 +27,21 @@ namespace SGRH.Application.Services.habitacion
 
             await _repository.CreateAsync(Categoria);
 
-            var resultDto = new CategoriumDTO
+            var resultDto = new CreateCategoriumDto
             {
-                IdCategoria = Categoria.IdCategoria,
                 Descripcion = Categoria.Descripcion,
                 IdServicio = Categoria.IdServicio,
                 Estado = Categoria.Estado,
                 UsuarioCreacion = Categoria.UsuarioCreacion,
-                FechaCreacion = Categoria.FechaCreacion,
-                UsuarioEliminacion = Categoria.UsuarioEliminacion,
-                FechaEliminado = Categoria.FechaEliminado,
-                UsuarioActualizacion = Categoria.UsuarioActualizacion,
-                FechaActualizacion = Categoria.FechaActualizacion,
-                Borrado = Categoria.Borrado
+                FechaCreacion = Categoria.FechaCreacion
             };
 
-            return OperationResult<CategoriumDTO>.Succes("Datos agregados correctamente",resultDto);
+            return resultDto;
         }
 
-        public async Task<OperationResult<CategoriumDTO>> DeleteAsync(int Id, int IdUsuario)
+        public async Task<DeleteCategoriumDto> DeleteAsync(int Id, int IdUsuario)
         {
             var Categoria = await _repository.GetByIdAsync(Id);
-
-            if (Categoria == null || Categoria.Borrado)
-                return OperationResult<CategoriumDTO>.Failure("No se concontraron los datos a eliminar");
 
             Categoria.Borrado = true;
             Categoria.Estado = false;
@@ -60,82 +50,51 @@ namespace SGRH.Application.Services.habitacion
 
             await _repository.UpdateAsync(Categoria);
 
-            var resultDto = new CategoriumDTO
+            var resultDto = new DeleteCategoriumDto
             {
                 IdCategoria = Categoria.IdCategoria,
-                Descripcion = Categoria.Descripcion,
-                IdServicio = Categoria.IdServicio,
                 Estado = Categoria.Estado,
-                UsuarioCreacion = Categoria.UsuarioCreacion,
-                FechaCreacion = Categoria.FechaCreacion,
                 UsuarioEliminacion = Categoria.UsuarioEliminacion,
                 FechaEliminado = Categoria.FechaEliminado,
-                UsuarioActualizacion = Categoria.UsuarioActualizacion,
-                FechaActualizacion = Categoria.FechaActualizacion,
                 Borrado = Categoria.Borrado
             };
 
-            return OperationResult<CategoriumDTO>.Succes("Datos eliminado correctamente", resultDto);
+            return resultDto;
         }
 
-        public async Task<OperationResult<IEnumerable<CategoriumDTO>>> GetAllAsync()
+        public async Task<IEnumerable<ReadCategoriumDto>> GetAllAsync()
         {
             var Categoria = await _repository.GetAllAsync();
 
-            if (!Categoria.Any())
-                return OperationResult<IEnumerable<CategoriumDTO>>.Failure("No se encontraron los datos");
-
             var dto = Categoria.Where(c => !c.Borrado)
-                .Select(c => new CategoriumDTO 
+                .Select(c => new ReadCategoriumDto 
                 {
                     IdCategoria = c.IdCategoria,
                     Descripcion = c.Descripcion,
-                    IdServicio = c.IdServicio,
-                    Estado = c.Estado,
-                    UsuarioCreacion = c.UsuarioCreacion,
-                    FechaCreacion = c.FechaCreacion,
-                    UsuarioEliminacion = c.UsuarioEliminacion,
-                    FechaEliminado = c.FechaEliminado,
-                    UsuarioActualizacion = c.UsuarioActualizacion,
-                    FechaActualizacion = c.FechaActualizacion,
-                    Borrado = c.Borrado
+                    IdServicio = c.IdServicio
                 });
 
-            return OperationResult<IEnumerable<CategoriumDTO>>.Succes("Datos cargados correctmente",dto);
+            return dto;
         }
 
-        public async Task<OperationResult<CategoriumDTO>> GetByIdAsync(int Id)
+        public async Task<ReadCategoriumDto> GetByIdAsync(int Id)
         {
             var Categoria = await _repository.GetByIdAsync(Id);
 
-            if (Categoria == null || Categoria.Borrado)
-                return OperationResult<CategoriumDTO>.Failure("No se encontraron los datos solicitados");
-
-            var resultDto = new CategoriumDTO
+            var resultDto = new ReadCategoriumDto
             {
                 IdCategoria = Categoria.IdCategoria,
                 Descripcion = Categoria.Descripcion,
-                IdServicio = Categoria.IdServicio,
-                Estado = Categoria.Estado,
-                UsuarioCreacion = Categoria.UsuarioCreacion,
-                FechaCreacion = Categoria.FechaCreacion,
-                UsuarioEliminacion = Categoria.UsuarioEliminacion,
-                FechaEliminado = Categoria.FechaEliminado,
-                UsuarioActualizacion = Categoria.UsuarioActualizacion,
-                FechaActualizacion = Categoria.FechaActualizacion,
-                Borrado = Categoria.Borrado
+                IdServicio = Categoria.IdServicio
             };
 
-            return OperationResult<CategoriumDTO>.Succes("Datos cargados correctamente", resultDto);
+            return resultDto;
         }
 
-        public async Task<OperationResult<CategoriumDTO>> UpdateAsync(CategoriumDTO dto)
+        public async Task<UpdateCategoriumDto> UpdateAsync(UpdateCategoriumDto dto)
         {
 
             var Categoria = await _repository.GetByIdAsync(dto.IdCategoria);
-
-            if (Categoria == null || Categoria.Borrado)
-                return OperationResult<CategoriumDTO>.Failure("No se encontraron los datos a actualizar");
 
             Categoria.Descripcion = dto.Descripcion;
             Categoria.IdServicio = dto.IdServicio;
@@ -144,22 +103,16 @@ namespace SGRH.Application.Services.habitacion
 
             await _repository.UpdateAsync(Categoria);
 
-            var resultDto = new CategoriumDTO
+            var resultDto = new UpdateCategoriumDto
             {
                 IdCategoria = Categoria.IdCategoria,
                 Descripcion = Categoria.Descripcion,
                 IdServicio = Categoria.IdServicio,
-                Estado = Categoria.Estado,
-                UsuarioCreacion = Categoria.UsuarioCreacion,
-                FechaCreacion = Categoria.FechaCreacion,
-                UsuarioEliminacion = Categoria.UsuarioEliminacion,
-                FechaEliminado = Categoria.FechaEliminado,
                 UsuarioActualizacion = Categoria.UsuarioActualizacion,
-                FechaActualizacion = Categoria.FechaActualizacion,
-                Borrado = Categoria.Borrado
+                FechaActualizacion = Categoria.FechaActualizacion
             };
 
-            return OperationResult<CategoriumDTO>.Succes("Datos actualizados correctamente", resultDto);
+            return resultDto;
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿
-using SGRH.Domein.Base;
 
 namespace SGRH.Domein.Interfaces.IBaseInterface
 {

@@ -1,4 +1,5 @@
-﻿using SGRH.Application.Interfaces.habitacion;
+﻿using SGRH.Api.Middleware;
+using SGRH.Application.Interfaces.habitacion;
 using SGRH.Application.Interfaces.Services;
 using SGRH.Application.Interfaces.Usuarios;
 using SGRH.Application.Services.habitacion;
@@ -55,6 +56,9 @@ namespace SGRH.Api.Dependencies
             service.AddScoped<ITarifaService, TarifaService>();
             service.AddScoped<ITarifaRepository, TarifaRepository>();
             #endregion
+
+
+            service.AddTransient<GlobalExecptionMiddleware>();
 
         }
     }

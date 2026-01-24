@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SGRH.Application.DTOs.Usuarios;
+using SGRH.Application.DTOs.Usuarios.UsuarioDto;
 using SGRH.Application.Interfaces.Usuarios;
 
 namespace SGRH.Api.Controllers.UsuariosController
@@ -16,12 +16,9 @@ namespace SGRH.Api.Controllers.UsuariosController
         }
 
         [HttpPost("CreateUssuario")]
-        public async Task<IActionResult> Create(UsuarioDTO model) 
+        public async Task<IActionResult> Create(CreateUsuarioDto model) 
         {
             var result = await _service.CreateAsync(model);
-
-            if (!result.IsSucces)
-                return BadRequest(result);
 
             return Ok(result);
         }
@@ -31,9 +28,6 @@ namespace SGRH.Api.Controllers.UsuariosController
         {
             var result = await _service.GetAllAsync();
 
-            if(!result.IsSucces)
-                return BadRequest(result);
-
             return Ok(result);
         }
 
@@ -41,9 +35,6 @@ namespace SGRH.Api.Controllers.UsuariosController
         public async Task<IActionResult> GetById(int Id) 
         {
             var result = await _service.GetByIdAsync(Id);
-
-            if (!result.IsSucces)
-                return BadRequest(result);
 
             return Ok(result);
         }
@@ -53,19 +44,14 @@ namespace SGRH.Api.Controllers.UsuariosController
         {
             var result = await _service.DeleteAsync(Id,IdUsuario);
 
-            if (!result.IsSucces)
-                return BadRequest(result);
 
             return Ok(result);
         }
 
         [HttpPut("UpdateUsuario")]
-        public async Task<IActionResult> Update(UsuarioDTO model)
+        public async Task<IActionResult> Update(UpdateUsuarioDto model)
         {
             var result = await _service.UpdateAsync(model);
-
-            if (!result.IsSucces)
-                return BadRequest(result);
 
             return Ok(result);
         }

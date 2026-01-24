@@ -1,11 +1,8 @@
-﻿using SGRH.Application.DTOs.Base;
-
-namespace SGRH.Application.DTOs.Habitacion
+﻿
+namespace SGRH.Application.DTOs.Habitacion.HabitacionDto
 {
-    public class HabitacionDTO : BaseDTO
+    public class CreateHabitacionDto
     {
-        public int IdHabitacion { get; set; }
-
         public string Numero { get; set; }
 
         public string Detalle { get; set; }
@@ -17,5 +14,11 @@ namespace SGRH.Application.DTOs.Habitacion
         public int IdPiso { get; set; }
 
         public int IdCategoria { get; set; }
+
+        public bool? Estado { get; set; }
+
+        public int UsuarioCreacion { get; set; }
+
+        public DateTime FechaCreacion { get; set; }
     }
 }

@@ -1,7 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SGRH.Domein.Base;
 using SGRH.Domein.Entitys;
 using SGRH.Domein.Interfaces.Habitaciones;
 using SGRH.Percistence.Context;
@@ -30,7 +29,6 @@ namespace SGRH.Percistence.Repository.Habitaciones
 
         public async Task  DeleteAsync(int Id, int IdUsuario)
         {
-            OperationResult<Categorium> result = new OperationResult<Categorium>();
             _logger.LogInformation("Proceso parra eliminar una categoria");
             
             var categoria = await _dbSet.FirstOrDefaultAsync(c => c.IdCategoria == Id && !c.Borrado);

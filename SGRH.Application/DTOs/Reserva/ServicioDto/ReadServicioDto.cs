@@ -1,10 +1,8 @@
 ﻿
 
-using SGRH.Application.DTOs.Base;
-
-namespace SGRH.Application.DTOs.Reserva
+namespace SGRH.Application.DTOs.Reserva.ServicioDto
 {
-    public class ServicioDTO : BaseDTO
+    public class ReadServicioDto
     {
         public int IdServicio { get; set; }
 

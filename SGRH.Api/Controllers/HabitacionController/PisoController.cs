@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SGRH.Application.DTOs.Habitacion;
+using SGRH.Application.DTOs.Habitacion.PisoDto;
 using SGRH.Application.Interfaces.habitacion;
 
 
@@ -17,12 +17,9 @@ namespace SGRH.Api.Controllers.HabitacionController
         }
 
         [HttpPost("CreatePiso")]
-        public async Task<IActionResult> Create(PisoDTO model) 
+        public async Task<IActionResult> Create(CreatePisoDto model) 
         {
             var result = await _service.CreateAsync(model);
-
-            if (!result.IsSucces)
-                return BadRequest(result);
 
 
             return Ok(result);
@@ -34,9 +31,6 @@ namespace SGRH.Api.Controllers.HabitacionController
         {
             var result = await _service.GetAllAsync();
 
-            if (!result.IsSucces)
-                return BadRequest(result);
-
 
             return Ok(result);
         }
@@ -45,9 +39,6 @@ namespace SGRH.Api.Controllers.HabitacionController
         public async Task<IActionResult> GetById(int Id) 
         {
             var result = await _service.GetByIdAsync(Id);
-
-            if (!result.IsSucces)
-                return BadRequest(result);
 
 
             return Ok(result);
@@ -58,20 +49,14 @@ namespace SGRH.Api.Controllers.HabitacionController
         {
             var result = await _service.DeleteAsync(Id, IdUsuario);
 
-            if (!result.IsSucces)
-                return BadRequest(result);
-
 
             return Ok(result);
         }
 
         [HttpPut("UpdatePiso")]
-        public async Task<IActionResult> Update(PisoDTO modelo) 
+        public async Task<IActionResult> Update(UpdatePisoDto modelo) 
         {
             var result = await _service.UpdateAsync(modelo);
-
-            if (!result.IsSucces)
-                return BadRequest(result);
 
 
             return Ok(result);

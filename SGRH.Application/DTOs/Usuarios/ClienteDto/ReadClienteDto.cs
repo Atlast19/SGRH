@@ -1,10 +1,8 @@
 ﻿
 
-using SGRH.Application.DTOs.Base;
-
-namespace SGRH.Application.DTOs.Usuarios
+namespace SGRH.Application.DTOs.Usuarios.ClienteDto
 {
-    public class ClienteDTO : BaseDTO
+    public class ReadClienteDto
     {
         public int IdCliente { get; set; }
 

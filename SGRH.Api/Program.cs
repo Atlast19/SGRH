@@ -1,8 +1,9 @@
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using SGRH.Api.Dependencies;
+using SGRH.Api.Middleware;
 using SGRH.Percistence.Context;
+
 
 namespace SGRH.Api
 {
@@ -35,6 +36,7 @@ namespace SGRH.Api
 
             app.UseAuthorization();
 
+            app.UseMiddleware<GlobalExecptionMiddleware>();
 
             app.MapControllers();
 

@@ -1,11 +1,15 @@
 ﻿
+using SGRH.Application.DTOs.Usuarios.RolUsuarioDto;
 
-using SGRH.Application.DTOs.Usuarios;
-using SGRH.Application.Interfaces.Base;
 
 namespace SGRH.Application.Interfaces.Usuarios
 {
-    public interface IRolUsuarioService : IBaseServices<RolUsuarioDTO>
+    public interface IRolUsuarioService
     {
+        Task<IEnumerable<ReadRolUsuarioDto>> GetAllAsync();
+        Task<ReadRolUsuarioDto> GetByIdAsync(int Id);
+        Task<CreateRolUsuarioDto> CreateAsync(CreateRolUsuarioDto modelo);
+        Task<DeleteRolUsuarioDto> DeleteAsync(int Id, int IdUsuario);
+        Task<UpdateRolUsuarioDto> UpdateAsync(UpdateRolUsuarioDto modelo);
     }
 }

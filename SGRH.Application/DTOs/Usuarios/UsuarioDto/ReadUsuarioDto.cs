@@ -1,10 +1,8 @@
 ﻿
 
-using SGRH.Application.DTOs.Base;
-
-namespace SGRH.Application.DTOs.Usuarios
+namespace SGRH.Application.DTOs.Usuarios.UsuarioDto
 {
-    public class UsuarioDTO : BaseDTO
+    public class ReadUsuarioDto
     {
         public int IdUsuario { get; set; }
 

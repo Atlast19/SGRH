@@ -1,6 +1,5 @@
-﻿using SGRH.Application.DTOs.Habitacion;
+﻿using SGRH.Application.DTOs.Habitacion.PisoDto;
 using SGRH.Application.Interfaces.habitacion;
-using SGRH.Domein.Base;
 using SGRH.Domein.Entitys;
 using SGRH.Domein.Interfaces.Habitaciones;
 
@@ -15,7 +14,7 @@ namespace SGRH.Application.Services.habitacion
             _respository = respository;
         }
 
-        public async Task<OperationResult<PisoDTO>> CreateAsync(PisoDTO dto)
+        public async Task<CreatePisoDto> CreateAsync(CreatePisoDto dto)
         {
             var Piso = new Piso();
 
@@ -23,34 +22,24 @@ namespace SGRH.Application.Services.habitacion
             Piso.UsuarioCreacion = dto.UsuarioCreacion;
             Piso.FechaCreacion = DateTime.Now;
             Piso.Estado = true;
-            Piso.Borrado = false;
 
 
             await _respository.CreateAsync(Piso);
 
-            var resultDto = new PisoDTO 
+            var resultDto = new CreatePisoDto 
             {
-                IdPiso = Piso.IdPiso,
                 Descripcion = Piso.Descripcion,
                 Estado = Piso.Estado,
                 UsuarioCreacion = Piso.UsuarioCreacion,
-                FechaCreacion = Piso.FechaCreacion,
-                UsuarioEliminacion = Piso.UsuarioEliminacion,
-                FechaEliminado = Piso.FechaEliminado,
-                UsuarioActualizacion = Piso.UsuarioActualizacion,
-                FechaActualizacion = Piso.FechaActualizacion,
-                Borrado = Piso.Borrado
+                FechaCreacion = Piso.FechaCreacion
             };
 
-            return OperationResult<PisoDTO>.Succes("Datos agregados correctamente",resultDto);
+            return resultDto;
         }
 
-        public async Task<OperationResult<PisoDTO>> DeleteAsync(int Id, int IdUsuario)
+        public async Task<DeletePisoDto> DeleteAsync(int Id, int IdUsuario)
         {
             var Piso = await _respository.GetByIdAsync(Id);
-
-            if (Piso == null || Piso.Borrado)
-                return OperationResult<PisoDTO>.Failure("No se encontraron los datos aeliminar");
 
             Piso.Borrado = true;
             Piso.Estado = false;
@@ -59,79 +48,49 @@ namespace SGRH.Application.Services.habitacion
 
             await _respository.UpdateAsync(Piso);
 
-            var resultDto = new PisoDTO
+            var resultDto = new DeletePisoDto
             {
                 IdPiso = Piso.IdPiso,
-                Descripcion = Piso.Descripcion,
                 Estado = Piso.Estado,
-                UsuarioCreacion = Piso.UsuarioCreacion,
-                FechaCreacion = Piso.FechaCreacion,
                 UsuarioEliminacion = Piso.UsuarioEliminacion,
                 FechaEliminado = Piso.FechaEliminado,
-                UsuarioActualizacion = Piso.UsuarioActualizacion,
-                FechaActualizacion = Piso.FechaActualizacion,
                 Borrado = Piso.Borrado
             };
 
-            return OperationResult<PisoDTO>.Succes("Datos eliminados correctamente", resultDto);
+            return resultDto;
         }
 
-        public async Task<OperationResult<IEnumerable<PisoDTO>>> GetAllAsync()
+        public async Task<IEnumerable<ReadPisoDto>> GetAllAsync()
         {
             var Piso = await _respository.GetAllAsync();
 
-            if (!Piso.Any())
-                return OperationResult<IEnumerable<PisoDTO>>.Failure("No se encontraron datos");
-
             var dto = Piso.Where(c => !c.Borrado)
-                .Select(c => new PisoDTO 
+                .Select(c => new ReadPisoDto 
                 {
                     IdPiso = c.IdPiso,
-                    Descripcion = c.Descripcion,
-                    Estado = c.Estado,
-                    UsuarioCreacion = c.UsuarioCreacion,
-                    FechaCreacion = c.FechaCreacion,
-                    UsuarioEliminacion = c.UsuarioEliminacion,
-                    FechaEliminado = c.FechaEliminado,
-                    UsuarioActualizacion = c.UsuarioActualizacion,
-                    FechaActualizacion = c.FechaActualizacion,
-                    Borrado = c.Borrado
+                    Descripcion = c.Descripcion
                 });
 
-            return OperationResult<IEnumerable<PisoDTO>>.Succes("Datos cargados correctamente",dto);
+            return dto;
         }
 
-        public async Task<OperationResult<PisoDTO>> GetByIdAsync(int Id)
+        public async Task<ReadPisoDto> GetByIdAsync(int Id)
         {
             var Piso = await _respository.GetByIdAsync(Id);
 
-            if (Piso == null || Piso.Borrado)
-                return OperationResult<PisoDTO>.Failure("No se encontraron los datos solicitados");
-
-            var resultDto = new PisoDTO
+            var resultDto = new ReadPisoDto
             {
                 IdPiso = Piso.IdPiso,
-                Descripcion = Piso.Descripcion,
-                Estado = Piso.Estado,
-                UsuarioCreacion = Piso.UsuarioCreacion,
-                FechaCreacion = Piso.FechaCreacion,
-                UsuarioEliminacion = Piso.UsuarioEliminacion,
-                FechaEliminado = Piso.FechaEliminado,
-                UsuarioActualizacion = Piso.UsuarioActualizacion,
-                FechaActualizacion = Piso.FechaActualizacion,
-                Borrado = Piso.Borrado
+                Descripcion = Piso.Descripcion
             };
 
-            return OperationResult<PisoDTO>.Succes("Datos cargados correctamente", resultDto);
+            return resultDto;
         }
 
-        public async Task<OperationResult<PisoDTO>> UpdateAsync(PisoDTO dto)
+        public async Task<UpdatePisoDto> UpdateAsync(UpdatePisoDto dto)
         {
 
            var Piso = await _respository.GetByIdAsync(dto.IdPiso);
-
-            if (Piso == null || Piso.Borrado)
-                return OperationResult<PisoDTO>.Failure("No se encontraron los datos a actualizar");
 
 
             Piso.Descripcion = dto.Descripcion;
@@ -140,21 +99,16 @@ namespace SGRH.Application.Services.habitacion
 
             await _respository.UpdateAsync(Piso);
 
-            var resultDto = new PisoDTO
+            var resultDto = new UpdatePisoDto
             {
                 IdPiso = Piso.IdPiso,
                 Descripcion = Piso.Descripcion,
                 Estado = Piso.Estado,
-                UsuarioCreacion = Piso.UsuarioCreacion,
-                FechaCreacion = Piso.FechaCreacion,
-                UsuarioEliminacion = Piso.UsuarioEliminacion,
-                FechaEliminado = Piso.FechaEliminado,
                 UsuarioActualizacion = Piso.UsuarioActualizacion,
-                FechaActualizacion = Piso.FechaActualizacion,
-                Borrado = Piso.Borrado
+                FechaActualizacion = Piso.FechaActualizacion
             };
 
-            return OperationResult<PisoDTO>.Succes("Datos cargados correctamente", resultDto);
+            return resultDto;
         }
     }
 }

@@ -1,8 +1,5 @@
-﻿
-
-using SGRH.Application.DTOs.Reserva;
+﻿using SGRH.Application.DTOs.Reserva.ReservaDto;
 using SGRH.Application.Interfaces.Services;
-using SGRH.Domein.Base;
 using SGRH.Domein.Entitys;
 using SGRH.Domein.Interfaces.Servicios;
 
@@ -17,7 +14,7 @@ namespace SGRH.Application.Services.Servicios
             _repository = repository;
         }
 
-        public async Task<OperationResult<ReservaDTO>> CreateAsync(ReservaDTO dto)
+        public async Task<CreateReservaDto> CreateAsync(CreateReservaDto dto)
         {
             var Reserva = new Reserva();
 
@@ -35,13 +32,11 @@ namespace SGRH.Application.Services.Servicios
             Reserva.Estado = true;
             Reserva.UsuarioCreacion = dto.UsuarioCreacion;
             Reserva.FechaCreacion = DateTime.Now;
-            Reserva.Borrado = false;
 
             await _repository.CreateAsync(Reserva);
 
-            var resultDto = new ReservaDTO
+            var resultDto = new CreateReservaDto
             {
-                IdReserva = Reserva.IdReserva,
                 IdCliente = Reserva.IdCliente,
                 IdHabitacion = Reserva.IdHabitacion,
                 FechaEntrada = Reserva.FechaEntrada,
@@ -55,23 +50,15 @@ namespace SGRH.Application.Services.Servicios
                 Observacion = Reserva.Observacion,
                 Estado = Reserva.Estado,
                 UsuarioCreacion = Reserva.UsuarioCreacion,
-                FechaCreacion = Reserva.FechaCreacion,
-                UsuarioEliminacion = Reserva.UsuarioEliminacion,
-                FechaEliminado = Reserva.FechaEliminado,
-                UsuarioActualizacion = Reserva.UsuarioActualizacion,
-                FechaActualizacion = Reserva.FechaActualizacion,
-                Borrado = Reserva.Borrado
+                FechaCreacion = Reserva.FechaCreacion
             };
 
-            return OperationResult<ReservaDTO>.Succes("Datos agregados correctamente",resultDto);
+            return resultDto;
         }
 
-        public async Task<OperationResult<ReservaDTO>> DeleteAsync(int Id, int IdUsuario)
+        public async Task<DeleteReservaDto> DeleteAsync(int Id, int IdUsuario)
         {
             var Reserva = await _repository.GetByIdAsync(Id);
-
-            if (Reserva == null || Reserva.Borrado)
-                return OperationResult<ReservaDTO>.Failure("No se encontraron los datos a eliminar");
 
             Reserva.Borrado = true;
             Reserva.Estado = false;
@@ -80,42 +67,25 @@ namespace SGRH.Application.Services.Servicios
 
             await _repository.UpdateAsync(Reserva);
 
-            var resultDto = new ReservaDTO
+            var resultDto = new DeleteReservaDto
             {
                 IdReserva = Reserva.IdReserva,
-                IdCliente = Reserva.IdCliente,
-                IdHabitacion = Reserva.IdHabitacion,
-                FechaEntrada = Reserva.FechaEntrada,
-                FechaSalida = Reserva.FechaSalida,
-                FechaSalidaConfirmacion = Reserva.FechaSalidaConfirmacion,
-                PrecioInicial = Reserva.PrecioInicial,
-                Adelanto = Reserva.Adelanto,
-                PrecioRestante = Reserva.PrecioRestante,
-                TotalPagado = Reserva.TotalPagado,
-                CostoPenalidad = Reserva.CostoPenalidad,
-                Observacion = Reserva.Observacion,
                 Estado = Reserva.Estado,
-                UsuarioCreacion = Reserva.UsuarioCreacion,
-                FechaCreacion = Reserva.FechaCreacion,
                 UsuarioEliminacion = Reserva.UsuarioEliminacion,
                 FechaEliminado = Reserva.FechaEliminado,
-                UsuarioActualizacion = Reserva.UsuarioActualizacion,
-                FechaActualizacion = Reserva.FechaActualizacion,
                 Borrado = Reserva.Borrado
             };
 
-            return OperationResult<ReservaDTO>.Succes("Datos eliminados correctamente", resultDto);
+            return resultDto;
         }
 
-        public async Task<OperationResult<IEnumerable<ReservaDTO>>> GetAllAsync()
+        public async Task<IEnumerable<ReadReservaDto>> GetAllAsync()
         {
             var Reserva = await _repository.GetAllAsync();
 
-            if (!Reserva.Any())
-                return OperationResult<IEnumerable<ReservaDTO>>.Failure("No se encontraron los datos");
 
             var dto = Reserva.Where(c => !c.Borrado)
-                .Select(c => new ReservaDTO 
+                .Select(c => new ReadReservaDto 
                 {
                     IdReserva = c.IdReserva,
                     IdCliente = c.IdCliente,
@@ -128,28 +98,17 @@ namespace SGRH.Application.Services.Servicios
                     PrecioRestante = c.PrecioRestante,
                     TotalPagado = c.TotalPagado,
                     CostoPenalidad = c.CostoPenalidad,
-                    Observacion = c.Observacion,
-                    Estado = c.Estado,
-                    UsuarioCreacion = c.UsuarioCreacion,
-                    FechaCreacion = c.FechaCreacion,
-                    UsuarioEliminacion = c.UsuarioEliminacion,
-                    FechaEliminado = c.FechaEliminado,
-                    UsuarioActualizacion = c.UsuarioActualizacion,
-                    FechaActualizacion = c.FechaActualizacion,
-                    Borrado = c.Borrado
+                    Observacion = c.Observacion
                 });
 
-            return OperationResult<IEnumerable<ReservaDTO>>.Succes("Datos cargados correctamente",dto);
+            return dto;
         }
 
-        public async Task<OperationResult<ReservaDTO>> GetByIdAsync(int Id)
+        public async Task<ReadReservaDto> GetByIdAsync(int Id)
         {
             var Reserva = await _repository.GetByIdAsync(Id);
 
-            if (Reserva == null || Reserva.Borrado)
-                return OperationResult<ReservaDTO>.Failure("No se encontraron los datos solicitados");
-
-            var resultDto = new ReservaDTO
+            var resultDto = new ReadReservaDto
             {
                 IdReserva = Reserva.IdReserva,
                 IdCliente = Reserva.IdCliente,
@@ -162,27 +121,16 @@ namespace SGRH.Application.Services.Servicios
                 PrecioRestante = Reserva.PrecioRestante,
                 TotalPagado = Reserva.TotalPagado,
                 CostoPenalidad = Reserva.CostoPenalidad,
-                Observacion = Reserva.Observacion,
-                Estado = Reserva.Estado,
-                UsuarioCreacion = Reserva.UsuarioCreacion,
-                FechaCreacion = Reserva.FechaCreacion,
-                UsuarioEliminacion = Reserva.UsuarioEliminacion,
-                FechaEliminado = Reserva.FechaEliminado,
-                UsuarioActualizacion = Reserva.UsuarioActualizacion,
-                FechaActualizacion = Reserva.FechaActualizacion,
-                Borrado = Reserva.Borrado
+                Observacion = Reserva.Observacion
             };
 
-            return OperationResult<ReservaDTO>.Succes("Datos cargados correctamente", resultDto);
+            return resultDto;
         }
 
-        public async Task<OperationResult<ReservaDTO>> UpdateAsync(ReservaDTO dto)
+        public async Task<UpdateReservaDto> UpdateAsync(UpdateReservaDto dto)
         {
 
            var Reserva = await _repository.GetByIdAsync(dto.IdReserva);
-
-            if (Reserva == null || Reserva.Borrado)
-                return OperationResult<ReservaDTO>.Failure("No se encontraro nlos datos a actualizar");
 
 
             Reserva.IdCliente = dto.IdCliente;
@@ -203,7 +151,7 @@ namespace SGRH.Application.Services.Servicios
             await _repository.UpdateAsync(Reserva);
 
 
-            var resultDto = new ReservaDTO
+            var resultDto = new UpdateReservaDto
             {
                 IdReserva = Reserva.IdReserva,
                 IdCliente = Reserva.IdCliente,
@@ -217,18 +165,11 @@ namespace SGRH.Application.Services.Servicios
                 TotalPagado = Reserva.TotalPagado,
                 CostoPenalidad = Reserva.CostoPenalidad,
                 Observacion = Reserva.Observacion,
-                Estado = Reserva.Estado,
-                UsuarioCreacion = Reserva.UsuarioCreacion,
-                FechaCreacion = Reserva.FechaCreacion,
-                UsuarioEliminacion = Reserva.UsuarioEliminacion,
-                FechaEliminado = Reserva.FechaEliminado,
                 UsuarioActualizacion = Reserva.UsuarioActualizacion,
-                FechaActualizacion = Reserva.FechaActualizacion,
-                Borrado = Reserva.Borrado
+                FechaActualizacion = Reserva.FechaActualizacion
             };
 
-            return OperationResult<ReservaDTO>.Succes("Datos actualizados correctamente", resultDto);
-
+            return resultDto;
         }
     }
 }

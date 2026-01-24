@@ -1,9 +1,8 @@
 ﻿
-using SGRH.Application.DTOs.Base;
 
-namespace SGRH.Application.DTOs.Habitacion
+namespace SGRH.Application.DTOs.Habitacion.CategoriumDto
 {
-    public class CategoriumDTO : BaseDTO
+    public class ReadCategoriumDto
     {
         public int IdCategoria { get; set; }
 

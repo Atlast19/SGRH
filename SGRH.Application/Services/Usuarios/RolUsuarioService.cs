@@ -1,7 +1,5 @@
-﻿
-using SGRH.Application.DTOs.Usuarios;
+﻿using SGRH.Application.DTOs.Usuarios.RolUsuarioDto;
 using SGRH.Application.Interfaces.Usuarios;
-using SGRH.Domein.Base;
 using SGRH.Domein.Entitys;
 using SGRH.Domein.Interfaces.Usuarios;
 
@@ -16,7 +14,7 @@ namespace SGRH.Application.Services.Usuarios
             _repository = repository;
         }
 
-        public async Task<OperationResult<RolUsuarioDTO>> CreateAsync(RolUsuarioDTO dto)
+        public async Task<CreateRolUsuarioDto> CreateAsync(CreateRolUsuarioDto dto)
         {
             var RolUsuario = new RolUsuario();
 
@@ -24,33 +22,23 @@ namespace SGRH.Application.Services.Usuarios
             RolUsuario.UsuarioCreacion = dto.UsuarioCreacion;
             RolUsuario.FechaCreacion = DateTime.Now;
             RolUsuario.Estado = true;
-            RolUsuario.Borrado = false;
 
             await _repository.CreateAsync(RolUsuario);
 
-            var resultDto = new RolUsuarioDTO
+            var resultDto = new CreateRolUsuarioDto
             {
-                IdRolUsuario = RolUsuario.IdRolUsuario,
                 Descripcion = RolUsuario.Descripcion,
                 Estado = RolUsuario.Estado,
                 UsuarioCreacion = RolUsuario.UsuarioCreacion,
-                FechaCreacion = RolUsuario.FechaCreacion,
-                UsuarioEliminacion = RolUsuario.UsuarioEliminacion,
-                FechaEliminado = RolUsuario.FechaEliminado,
-                UsuarioActualizacion = RolUsuario.UsuarioActualizacion,
-                FechaActualizacion = RolUsuario.FechaActualizacion,
-                Borrado = RolUsuario.Borrado
+                FechaCreacion = RolUsuario.FechaCreacion
             };
 
-            return OperationResult<RolUsuarioDTO>.Succes("Datos agregados correctamente", resultDto);
+            return resultDto;
         }
 
-        public async Task<OperationResult<RolUsuarioDTO>> DeleteAsync(int Id, int IdUsuario)
+        public async Task<DeleteRolUsuarioDto> DeleteAsync(int Id, int IdUsuario)
         {
            var RolUsuario = await _repository.GetByIdAsync(Id);
-
-            if (RolUsuario == null || RolUsuario.Borrado)
-                return OperationResult<RolUsuarioDTO>.Failure("No se encontraron los datos a eliminar");
 
             RolUsuario.Borrado = true;
             RolUsuario.Estado = false;
@@ -59,79 +47,48 @@ namespace SGRH.Application.Services.Usuarios
 
             await _repository.UpdateAsync(RolUsuario);
 
-            var resultDto = new RolUsuarioDTO
+            var resultDto = new DeleteRolUsuarioDto
             {
                 IdRolUsuario = RolUsuario.IdRolUsuario,
-                Descripcion = RolUsuario.Descripcion,
                 Estado = RolUsuario.Estado,
-                UsuarioCreacion = RolUsuario.UsuarioCreacion,
-                FechaCreacion = RolUsuario.FechaCreacion,
                 UsuarioEliminacion = RolUsuario.UsuarioEliminacion,
                 FechaEliminado = RolUsuario.FechaEliminado,
-                UsuarioActualizacion = RolUsuario.UsuarioActualizacion,
-                FechaActualizacion = RolUsuario.FechaActualizacion,
                 Borrado = RolUsuario.Borrado
             };
 
-            return OperationResult<RolUsuarioDTO>.Succes("Datos eliminados correctamente", resultDto);
+            return resultDto;
         }
 
-        public async Task<OperationResult<IEnumerable<RolUsuarioDTO>>> GetAllAsync()
+        public async Task<IEnumerable<ReadRolUsuarioDto>> GetAllAsync()
         {
             var RolUsuario = await _repository.GetAllAsync();
 
-            if (!RolUsuario.Any())
-                return OperationResult<IEnumerable<RolUsuarioDTO>>.Failure("No se encontraron datos");
-
             var dto = RolUsuario.Where(c => !c.Borrado)
-                .Select(c => new RolUsuarioDTO 
+                .Select(c => new ReadRolUsuarioDto 
                 {
                     IdRolUsuario = c.IdRolUsuario,
-                    Descripcion = c.Descripcion,
-                    Estado = c.Estado,
-                    UsuarioCreacion = c.UsuarioCreacion,
-                    FechaCreacion = c.FechaCreacion,
-                    UsuarioEliminacion = c.UsuarioEliminacion,
-                    FechaEliminado = c.FechaEliminado,
-                    UsuarioActualizacion = c.UsuarioActualizacion,
-                    FechaActualizacion = c.FechaActualizacion,
-                    Borrado = c.Borrado
+                    Descripcion = c.Descripcion
                 });
 
-            return OperationResult<IEnumerable<RolUsuarioDTO>>.Succes("Datos cargados correctamente",dto);
+            return dto;
         }
 
-        public async Task<OperationResult<RolUsuarioDTO>> GetByIdAsync(int Id)
+        public async Task<ReadRolUsuarioDto> GetByIdAsync(int Id)
         {
             var RolUsuario = await _repository.GetByIdAsync(Id);
 
-            if (RolUsuario == null || RolUsuario.Borrado)
-                return OperationResult<RolUsuarioDTO>.Failure("No se encontraron los datos solicitados");
-
-            var resultDto = new RolUsuarioDTO
+            var resultDto = new ReadRolUsuarioDto
             {
                 IdRolUsuario = RolUsuario.IdRolUsuario,
-                Descripcion = RolUsuario.Descripcion,
-                Estado = RolUsuario.Estado,
-                UsuarioCreacion = RolUsuario.UsuarioCreacion,
-                FechaCreacion = RolUsuario.FechaCreacion,
-                UsuarioEliminacion = RolUsuario.UsuarioEliminacion,
-                FechaEliminado = RolUsuario.FechaEliminado,
-                UsuarioActualizacion = RolUsuario.UsuarioActualizacion,
-                FechaActualizacion = RolUsuario.FechaActualizacion,
-                Borrado = RolUsuario.Borrado
+                Descripcion = RolUsuario.Descripcion
             };
 
-            return OperationResult<RolUsuarioDTO>.Succes("Datos cargados correctamente", resultDto);
+            return resultDto;
         }
 
-        public async Task<OperationResult<RolUsuarioDTO>> UpdateAsync(RolUsuarioDTO dto)
+        public async Task<UpdateRolUsuarioDto> UpdateAsync(UpdateRolUsuarioDto dto)
         {
            var RolUsuario = await _repository.GetByIdAsync(dto.IdRolUsuario);
-
-            if (RolUsuario == null || RolUsuario.Borrado)
-                return OperationResult<RolUsuarioDTO>.Failure("No se entontraron los datos");
-
 
             RolUsuario.Descripcion = dto.Descripcion;
             RolUsuario.UsuarioActualizacion = dto.UsuarioActualizacion;
@@ -139,21 +96,15 @@ namespace SGRH.Application.Services.Usuarios
 
             await _repository.UpdateAsync(RolUsuario);
 
-            var resultDto = new RolUsuarioDTO
+            var resultDto = new UpdateRolUsuarioDto
             {
                 IdRolUsuario = RolUsuario.IdRolUsuario,
                 Descripcion = RolUsuario.Descripcion,
-                Estado = RolUsuario.Estado,
-                UsuarioCreacion = RolUsuario.UsuarioCreacion,
-                FechaCreacion = RolUsuario.FechaCreacion,
-                UsuarioEliminacion = RolUsuario.UsuarioEliminacion,
-                FechaEliminado = RolUsuario.FechaEliminado,
                 UsuarioActualizacion = RolUsuario.UsuarioActualizacion,
-                FechaActualizacion = RolUsuario.FechaActualizacion,
-                Borrado = RolUsuario.Borrado
+                FechaActualizacion = RolUsuario.FechaActualizacion
             };
 
-            return OperationResult<RolUsuarioDTO>.Succes("Datos actualizados correctamente", resultDto);
+            return resultDto;
         }
     }
 }

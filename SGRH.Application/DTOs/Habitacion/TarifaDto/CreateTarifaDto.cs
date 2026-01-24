@@ -1,13 +1,9 @@
 ﻿
 
-using SGRH.Application.DTOs.Base;
-
-namespace SGRH.Application.DTOs.Habitacion
+namespace SGRH.Application.DTOs.Habitacion.TarifaDto
 {
-    public class TarifaDTO : BaseDTO
+    public class CreateTarifaDto
     {
-        public int IdTarifa { get; set; }
-
         public int IdHabitacion { get; set; }
 
         public DateOnly FechaInicio { get; set; }
@@ -19,5 +15,9 @@ namespace SGRH.Application.DTOs.Habitacion
         public decimal Descuento { get; set; }
 
         public string Descripcion { get; set; }
+
+        public int UsuarioCreacion { get; set; }
+
+        public DateTime FechaCreacion { get; set; }
     }
 }

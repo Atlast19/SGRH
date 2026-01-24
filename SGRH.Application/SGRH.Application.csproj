@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SGRH.Domein\SGRH.Domein.csproj" />
-    <ProjectReference Include="..\SGRH.Percistence\SGRH.Percistence.csproj" />
   </ItemGroup>
 
 </Project>

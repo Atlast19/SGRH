@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SGRH.Application.DTOs.Habitacion;
+using SGRH.Application.DTOs.Habitacion.EstadoHabitacionDto;
 using SGRH.Application.Interfaces.habitacion;
 
 
@@ -18,12 +18,9 @@ namespace SGRH.Api.Controllers.HabitacionController
 
         [HttpPost("CreateEstadoHabitacion")]
 
-        public async Task<IActionResult> Creat(EstadoHabitacionDTO modelo) 
+        public async Task<IActionResult> Creat(CreateEstadoHabitacionDto modelo) 
         {
             var result = await _service.CreateAsync(modelo);
-
-            if (!result.IsSucces)
-                return BadRequest(result);
 
 
             return Ok(result);
@@ -35,9 +32,6 @@ namespace SGRH.Api.Controllers.HabitacionController
         {
             var result = await _service.GetAllAsync();
 
-            if (!result.IsSucces)
-                return BadRequest(result);
-
 
             return Ok(result);
         }
@@ -47,9 +41,6 @@ namespace SGRH.Api.Controllers.HabitacionController
         public async Task<IActionResult> GetById(int Id) 
         {
             var result = await _service.GetByIdAsync(Id);
-
-            if (!result.IsSucces)
-                return BadRequest(result);
 
 
             return Ok(result);
@@ -61,21 +52,15 @@ namespace SGRH.Api.Controllers.HabitacionController
         {
             var result = await _service.DeleteAsync(Id, IdUsuario);
 
-            if (!result.IsSucces)
-                return BadRequest(result);
-
 
             return Ok(result);
         }
 
         [HttpPut("UpdateEstadoHabitacion")]
 
-        public async Task<IActionResult> Update(EstadoHabitacionDTO modelo) 
+        public async Task<IActionResult> Update(UpdateEstadoHabitacionDto modelo) 
         {
             var result = await _service.UpdateAsync(modelo);
-
-            if (!result.IsSucces)
-                return BadRequest(result);
 
 
             return Ok(result);

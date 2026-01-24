@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SGRH.Application.DTOs.Reserva;
+using SGRH.Application.DTOs.Reserva.ReservaDto;
 using SGRH.Application.Interfaces.Services;
 
 namespace SGRH.Api.Controllers.ServiciosController
@@ -17,12 +17,9 @@ namespace SGRH.Api.Controllers.ServiciosController
 
         [HttpPost("CreateReserva")]
 
-        public async Task<IActionResult> Create(ReservaDTO modelo) 
+        public async Task<IActionResult> Create(CreateReservaDto modelo) 
         {
             var result = await _service.CreateAsync(modelo);
-
-            if (!result.IsSucces)
-                return BadRequest(result);
 
 
             return Ok(result);
@@ -34,9 +31,6 @@ namespace SGRH.Api.Controllers.ServiciosController
         {
             var result = await _service.GetAllAsync();
 
-            if (!result.IsSucces)
-                return BadRequest(result);
-
 
             return Ok(result);
         }
@@ -46,9 +40,6 @@ namespace SGRH.Api.Controllers.ServiciosController
         public async Task<IActionResult> GetById(int Id) 
         {
             var result = await _service.GetByIdAsync(Id);
-
-            if (!result.IsSucces)
-                return BadRequest(result);
 
 
             return Ok(result);
@@ -60,21 +51,15 @@ namespace SGRH.Api.Controllers.ServiciosController
         {
             var result = await _service.DeleteAsync(Id, IdUsuario);
 
-            if (!result.IsSucces)
-                return BadRequest(result);
-
 
             return Ok(result);
         }
 
         [HttpPut("UpdateReserva")]
 
-        public async Task<IActionResult> Update(ReservaDTO modelo) 
+        public async Task<IActionResult> Update(UpdateReservaDto modelo) 
         {
             var result = await _service.UpdateAsync(modelo);
-
-            if (!result.IsSucces)
-                return BadRequest(result);
 
 
             return Ok(result);

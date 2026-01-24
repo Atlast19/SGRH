@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SGRH.Application.DTOs.Habitacion;
+using SGRH.Application.DTOs.Habitacion.CategoriumDto;
 using SGRH.Application.Interfaces.habitacion;
 
 namespace SGRH.Api.Controllers.HabitacionController
@@ -17,12 +17,9 @@ namespace SGRH.Api.Controllers.HabitacionController
 
         [HttpPost("CreateCategorium")]
 
-        public async Task<IActionResult> Create(CategoriumDTO modelo) 
+        public async Task<IActionResult> Create(CreateCategoriumDto modelo) 
         {
             var result = await _service.CreateAsync(modelo);
-
-            if (!result.IsSucces)
-                return BadRequest(result);
 
 
             return Ok(result);
@@ -32,10 +29,7 @@ namespace SGRH.Api.Controllers.HabitacionController
 
         public async Task<IActionResult> GetAll() 
         {
-            var result =  await _service.GetAllAsync();
-
-            if (!result.IsSucces)
-                return BadRequest(result);
+             var result =  await _service.GetAllAsync();
 
 
             return Ok(result);
@@ -47,9 +41,6 @@ namespace SGRH.Api.Controllers.HabitacionController
         {
             var result = await _service.GetByIdAsync(Id);
 
-            if (!result.IsSucces)
-                return BadRequest(result);
-
 
             return Ok(result);
         }
@@ -60,21 +51,15 @@ namespace SGRH.Api.Controllers.HabitacionController
         {
             var result = await _service.DeleteAsync(Id,IdUsuario);
 
-            if (!result.IsSucces)
-                return BadRequest(result);
-
 
             return Ok(result);
         }
 
         [HttpPut("UpdateCategorium")]
 
-        public async Task<IActionResult> Update(CategoriumDTO modelo) 
+        public async Task<IActionResult> Update(UpdateCategoriumDto modelo) 
         {
             var result = await _service.UpdateAsync(modelo);
-
-            if (!result.IsSucces)
-                return BadRequest(result);
 
 
             return Ok(result);
