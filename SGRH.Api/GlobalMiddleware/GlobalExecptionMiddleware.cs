@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Text.Json;
 
@@ -25,11 +24,11 @@ namespace SGRH.Api.Middleware
 
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-                ProblemDetails problem = new ProblemDetails 
+                ProblemDetails problem = new ProblemDetails
                 {
                     Status = (int)HttpStatusCode.InternalServerError,
                     Type = "Error en el Servidor",
-                    Title = "Error en el SServidor",
+                    Title = "Error en el Servidor",
                     Detail = "Ha ocurrido un error en nuestro servidor"
                 };
 
@@ -38,7 +37,7 @@ namespace SGRH.Api.Middleware
                 context.Response.ContentType = "application/json";
 
                 await context.Response.WriteAsync(json);
-                    
+
             }
 
         }

@@ -15,6 +15,5 @@ namespace SGRH.Application.DTOs.Usuarios.UsuarioDto
 
         public int? UsuarioActualizacion { get; set; }
 
-        public DateTime? FechaActualizacion { get; set; }
     }
 }

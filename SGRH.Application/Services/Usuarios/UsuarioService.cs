@@ -1,5 +1,6 @@
 ﻿using SGRH.Application.DTOs.Usuarios.UsuarioDto;
 using SGRH.Application.Interfaces.Usuarios;
+using SGRH.Application.Validations.Habitacion.Categorium;
 using SGRH.Domein.Entitys;
 using SGRH.Domein.Interfaces.Usuarios;
 
@@ -17,14 +18,14 @@ namespace SGRH.Application.Services.Usuarios
         public async Task<CreateUsuarioDto> CreateAsync(CreateUsuarioDto dto)
         {
 
-            //Prender FluentValidation para aplicar las validaciones de los campos correspondientes
-
             var usuario = new Usuario();
+
 
             usuario.NombreCompleto = dto.NombreCompleto;
             usuario.Correo = dto.Correo;
             usuario.IdRolUsuario = dto.IdRolUsuario;
             usuario.Clave = dto.Clave;
+
             usuario.Estado = true;
             usuario.UsuarioCreacion = dto.UsuarioCreacion;
             usuario.FechaCreacion = DateTime.Now;
@@ -36,10 +37,9 @@ namespace SGRH.Application.Services.Usuarios
                 NombreCompleto = usuario.NombreCompleto,
                 Correo = usuario.Correo,
                 Clave = usuario.Clave,
-                IdRolUsuario = usuario.IdUsuario,
+                IdRolUsuario = usuario.IdRolUsuario,
                 UsuarioCreacion = usuario.UsuarioCreacion,
-                FechaCreacion = usuario.FechaCreacion,
-                Estado = usuario.Estado
+                
             };
 
             return resultDto;
@@ -59,10 +59,7 @@ namespace SGRH.Application.Services.Usuarios
             var resultDto = new DeleteUsuarioDto
             {
                 IdUsuario = usuario.IdUsuario,
-                UsuarioEliminacion = usuario.UsuarioEliminacion,
-                FechaEliminado = usuario.FechaEliminado,
-                Borrado = usuario.Borrado,
-                Estado = usuario.Estado
+                UsuarioEliminacion = usuario.UsuarioEliminacion
             };
 
             return resultDto;
@@ -72,13 +69,14 @@ namespace SGRH.Application.Services.Usuarios
         {
             var usuario = await _repository.GetAllAsync();
 
+
             var dto = usuario.Where(c => !c.Borrado)
                 .Select(c => new ReadUsuarioDto
                 {
                     IdUsuario = c.IdUsuario,
                     NombreCompleto = c.NombreCompleto,
                     Correo = c.Correo,
-                    IdRolUsuario = c.IdUsuario,
+                    IdRolUsuario = c.IdRolUsuario,
                     Clave = c.Clave
                 });
 
@@ -94,7 +92,7 @@ namespace SGRH.Application.Services.Usuarios
                 IdUsuario = usuario.IdUsuario,
                 NombreCompleto = usuario.NombreCompleto,
                 Correo = usuario.Correo,
-                IdRolUsuario = usuario.IdUsuario,
+                IdRolUsuario = usuario.IdRolUsuario,
                 Clave = usuario.Clave
             };
 
@@ -122,8 +120,7 @@ namespace SGRH.Application.Services.Usuarios
                 Correo = usuario.Correo,
                 Clave = usuario.Clave,
                 IdRolUsuario = usuario.IdUsuario,
-                UsuarioActualizacion = usuario.UsuarioActualizacion,
-                FechaActualizacion = usuario.FechaActualizacion,
+                UsuarioActualizacion = usuario.UsuarioActualizacion
 
             };
 

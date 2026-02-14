@@ -12,10 +12,8 @@ namespace SGRH.Application.DTOs.Usuarios.UsuarioDto
 
         public string Clave { get; set; }
 
-        public bool? Estado { get; set; }
-
         public int UsuarioCreacion { get; set; }
 
-        public DateTime FechaCreacion { get; set; }
+
     }
 }

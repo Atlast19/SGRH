@@ -36,6 +36,7 @@ namespace SGRH.Api.Controllers.UsuariosController
         {
             var result = await _service.GetByIdAsync(Id);
 
+
             return Ok(result);
         }
 

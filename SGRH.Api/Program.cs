@@ -1,9 +1,11 @@
-
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using SGRH.Api.Dependencies;
 using SGRH.Api.Middleware;
-using SGRH.Percistence.Context;
 
+using SGRH.Application.Validations.Usuarios.UsuarioValidator;
+using SGRH.Percistence.Context;
 
 namespace SGRH.Api
 {
@@ -19,6 +21,11 @@ namespace SGRH.Api
             builder.Services.RegisterOfRependencies();
 
             builder.Services.AddControllers();
+
+            builder.Services.AddFluentValidationAutoValidation();
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateUsuarioValidation>();
+            builder.Services.AddValidatorsFromAssemblyContaining<UpdateUsuarioValidation>();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -40,7 +47,7 @@ namespace SGRH.Api
 
             app.MapControllers();
 
-            app.Run();
+             app.Run();
         }
     }
 }

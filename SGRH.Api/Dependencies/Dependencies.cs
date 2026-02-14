@@ -60,6 +60,8 @@ namespace SGRH.Api.Dependencies
 
             service.AddTransient<GlobalExecptionMiddleware>();
 
+
+
         }
     }
 }
