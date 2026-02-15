@@ -22,6 +22,7 @@ namespace SGRH.Application.Services.Usuarios
             Cliente.TipoDocumento = dto.TipoDocumento;
             Cliente.Documento = dto.Documento;
             Cliente.Correo = dto.Correo;
+
             Cliente.Estado = true;
             Cliente.UsuarioCreacion = dto.UsuarioCreacion;
             Cliente.FechaCreacion = DateTime.Now;
@@ -34,9 +35,7 @@ namespace SGRH.Application.Services.Usuarios
                 TipoDocumento = Cliente.TipoDocumento,
                 Documento = Cliente.Documento,
                 Correo = Cliente.Correo,
-                Estado = Cliente.Estado,
-                UsuarioCreacion = Cliente.UsuarioCreacion,
-                FechaCreacion = Cliente.FechaCreacion
+                UsuarioCreacion = Cliente.UsuarioCreacion
             };
 
             return resultDto;
@@ -56,10 +55,7 @@ namespace SGRH.Application.Services.Usuarios
             var resultDto = new DeleteClienteDto
             {
                 IdCliente = Cliente.IdCliente,
-                Estado = Cliente.Estado,
-                UsuarioEliminacion = Cliente.UsuarioEliminacion,
-                FechaEliminado = Cliente.FechaEliminado,
-                Borrado = Cliente.Borrado
+                UsuarioEliminacion = Cliente.UsuarioEliminacion
             };
 
             return resultDto;
@@ -119,8 +115,7 @@ namespace SGRH.Application.Services.Usuarios
                 TipoDocumento = Cliente.TipoDocumento,
                 Documento = Cliente.Documento,
                 Correo = Cliente.Correo,
-                UsuarioActualizacion = Cliente.UsuarioActualizacion,
-                FechaActualizacion = Cliente.FechaActualizacion
+                UsuarioActualizacion = Cliente.UsuarioActualizacion
             };
 
             return resultDto;

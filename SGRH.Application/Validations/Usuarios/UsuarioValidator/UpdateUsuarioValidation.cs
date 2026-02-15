@@ -11,7 +11,7 @@ namespace SGRH.Application.Validations.Usuarios.UsuarioValidator
 
             RuleFor(x => x.IdUsuario)
                 .NotEmpty()
-                .NotEqual(0);
+                .NotEqual(0); 
 
             RuleFor(x => x.NombreCompleto)
                 .NotEmpty()

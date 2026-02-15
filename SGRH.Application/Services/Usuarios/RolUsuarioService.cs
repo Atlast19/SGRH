@@ -28,17 +28,18 @@ namespace SGRH.Application.Services.Usuarios
             var resultDto = new CreateRolUsuarioDto
             {
                 Descripcion = RolUsuario.Descripcion,
-                Estado = RolUsuario.Estado,
-                UsuarioCreacion = RolUsuario.UsuarioCreacion,
-                FechaCreacion = RolUsuario.FechaCreacion
+                UsuarioCreacion = RolUsuario.UsuarioCreacion
             };
 
             return resultDto;
         }
 
-        public async Task<DeleteRolUsuarioDto> DeleteAsync(int Id, int IdUsuario)
+        public async Task<DeleteRolUsuarioDto?> DeleteAsync(int Id, int IdUsuario)
         {
            var RolUsuario = await _repository.GetByIdAsync(Id);
+
+            if (RolUsuario == null)
+                return null;
 
             RolUsuario.Borrado = true;
             RolUsuario.Estado = false;
@@ -50,10 +51,8 @@ namespace SGRH.Application.Services.Usuarios
             var resultDto = new DeleteRolUsuarioDto
             {
                 IdRolUsuario = RolUsuario.IdRolUsuario,
-                Estado = RolUsuario.Estado,
-                UsuarioEliminacion = RolUsuario.UsuarioEliminacion,
-                FechaEliminado = RolUsuario.FechaEliminado,
-                Borrado = RolUsuario.Borrado
+                UsuarioEliminacion = RolUsuario.UsuarioEliminacion
+
             };
 
             return resultDto;
@@ -73,9 +72,12 @@ namespace SGRH.Application.Services.Usuarios
             return dto;
         }
 
-        public async Task<ReadRolUsuarioDto> GetByIdAsync(int Id)
+        public async Task<ReadRolUsuarioDto?> GetByIdAsync(int Id)
         {
             var RolUsuario = await _repository.GetByIdAsync(Id);
+
+            if (RolUsuario == null)
+                return null;
 
             var resultDto = new ReadRolUsuarioDto
             {
@@ -100,8 +102,7 @@ namespace SGRH.Application.Services.Usuarios
             {
                 IdRolUsuario = RolUsuario.IdRolUsuario,
                 Descripcion = RolUsuario.Descripcion,
-                UsuarioActualizacion = RolUsuario.UsuarioActualizacion,
-                FechaActualizacion = RolUsuario.FechaActualizacion
+                UsuarioActualizacion = RolUsuario.UsuarioActualizacion
             };
 
             return resultDto;

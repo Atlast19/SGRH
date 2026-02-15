@@ -1,6 +1,5 @@
 ﻿using SGRH.Application.DTOs.Usuarios.UsuarioDto;
 using SGRH.Application.Interfaces.Usuarios;
-using SGRH.Application.Validations.Habitacion.Categorium;
 using SGRH.Domein.Entitys;
 using SGRH.Domein.Interfaces.Usuarios;
 
@@ -45,9 +44,12 @@ namespace SGRH.Application.Services.Usuarios
             return resultDto;
         }
 
-        public async Task<DeleteUsuarioDto> DeleteAsync(int Id, int IdUsuario)
+        public async Task<DeleteUsuarioDto?> DeleteAsync(int Id, int IdUsuario)
         {
             var usuario = await _repository.GetByIdAsync(Id);
+
+            if (usuario == null)
+                return null;
 
             usuario.Borrado = true;
             usuario.Estado = false;
@@ -83,9 +85,12 @@ namespace SGRH.Application.Services.Usuarios
             return dto;
         }
 
-        public async Task<ReadUsuarioDto> GetByIdAsync(int Id)
+        public async Task<ReadUsuarioDto?> GetByIdAsync(int Id)
         {
             var usuario = await _repository.GetByIdAsync(Id);
+
+            if (usuario == null)
+                return null;
 
             var dto =  new ReadUsuarioDto
             {

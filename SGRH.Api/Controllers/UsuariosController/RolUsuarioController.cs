@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SGRH.Application.DTOs.Usuarios;
 using SGRH.Application.DTOs.Usuarios.RolUsuarioDto;
 using SGRH.Application.Interfaces.Usuarios;
 
@@ -36,7 +35,13 @@ namespace SGRH.Api.Controllers.UsuariosController
         [HttpGet("GetById")]
         public async Task<IActionResult> GetById(int Id)
         {
+            if (Id <= 0)
+                return BadRequest("No se Encontro el Rol de Usuario Solicitado");
+
             var result = await _service.GetByIdAsync(Id);
+
+            if (result == null)
+                return BadRequest("No se Encontro el Rol de Usuario Solicitado");
 
             return Ok(result);
         }
@@ -44,7 +49,13 @@ namespace SGRH.Api.Controllers.UsuariosController
         [HttpDelete("DeleteUsuario")]
         public async Task<IActionResult> Delete(int Id, int IdUsuario)
         {
+            if (Id <= 0 || IdUsuario <= 0)
+                return BadRequest("No se Encontro el Rol de Usuario a Eliminar");
+
             var result = await _service.DeleteAsync(Id, IdUsuario);
+
+            if (result == null)
+                return BadRequest("No se Encontro el Rol de Usuario a Eliminar");
 
             return Ok(result);
         }
