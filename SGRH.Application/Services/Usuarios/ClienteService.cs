@@ -41,9 +41,12 @@ namespace SGRH.Application.Services.Usuarios
             return resultDto;
         }
 
-        public async Task<DeleteClienteDto> DeleteAsync(int Id, int IdUsuario)
+        public async Task<DeleteClienteDto?> DeleteAsync(int Id, int IdUsuario)
         {
             var Cliente = await _repository.GetByIdAsync(Id);
+
+            if (Cliente == null)
+                return null;
 
             Cliente.Borrado = true;
             Cliente.Estado = false;
@@ -78,9 +81,12 @@ namespace SGRH.Application.Services.Usuarios
             return dto;
         }
 
-        public async Task<ReadClienteDto> GetByIdAsync(int Id)
+        public async Task<ReadClienteDto?> GetByIdAsync(int Id)
         {
             var Cliente = await _repository.GetByIdAsync(Id);
+
+            if (Cliente == null)
+                return null;
 
             var resultDto = new ReadClienteDto
             {

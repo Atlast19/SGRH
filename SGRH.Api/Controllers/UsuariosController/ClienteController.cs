@@ -37,8 +37,13 @@ namespace SGRH.Api.Controllers.UsuariosController
         [HttpGet("GetById")]
         public async Task<IActionResult> GetById(int id) 
         {
+            if (id <= 0)
+                return NotFound("No se Encontro el Cliente Solicitado");
+
             var result = await _service.GetByIdAsync(id);
 
+            if (result == null)
+                return NotFound("No se Encontro el Cliente Solicitado");
 
             return Ok(result);
         }
@@ -46,8 +51,13 @@ namespace SGRH.Api.Controllers.UsuariosController
         [HttpDelete("DeleteById")]
         public async Task<IActionResult> DeleteById(int id, int IdUsuario) 
         {
+            if (id <= 0 || IdUsuario <= 0)
+                return NotFound("No se Encontro el Cliente a Eliminar");
+
             var result = await _service.DeleteAsync(id, IdUsuario);
 
+            if (result == null)
+                return NotFound("No se Encontro el Cliente a Eliminar"); 
 
             return Ok(result);
         }

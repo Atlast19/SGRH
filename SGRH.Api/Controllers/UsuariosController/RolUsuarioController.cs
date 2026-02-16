@@ -36,12 +36,12 @@ namespace SGRH.Api.Controllers.UsuariosController
         public async Task<IActionResult> GetById(int Id)
         {
             if (Id <= 0)
-                return BadRequest("No se Encontro el Rol de Usuario Solicitado");
+                return NotFound("No se Encontro el Rol de Usuario Solicitado");
 
             var result = await _service.GetByIdAsync(Id);
 
             if (result == null)
-                return BadRequest("No se Encontro el Rol de Usuario Solicitado");
+                return NotFound("No se Encontro el Rol de Usuario Solicitado");
 
             return Ok(result);
         }
@@ -50,12 +50,12 @@ namespace SGRH.Api.Controllers.UsuariosController
         public async Task<IActionResult> Delete(int Id, int IdUsuario)
         {
             if (Id <= 0 || IdUsuario <= 0)
-                return BadRequest("No se Encontro el Rol de Usuario a Eliminar");
+                return NotFound("No se Encontro el Rol de Usuario a Eliminar");
 
             var result = await _service.DeleteAsync(Id, IdUsuario);
 
             if (result == null)
-                return BadRequest("No se Encontro el Rol de Usuario a Eliminar");
+                return NotFound("No se Encontro el Rol de Usuario a Eliminar");
 
             return Ok(result);
         }
