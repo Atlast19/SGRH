@@ -20,6 +20,5 @@ namespace SGRH.Application.DTOs.Habitacion.TarifaDto
 
         public int? UsuarioActualizacion { get; set; }
 
-        public DateTime? FechaActualizacion { get; set; }
     }
 }

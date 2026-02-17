@@ -3,6 +3,9 @@ using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using SGRH.Api.Dependencies;
 using SGRH.Api.Middleware;
+using SGRH.Application.Validations.Servicios.Reserva;
+using SGRH.Application.Validations.Servicios.Servicio;
+using SGRH.Application.Validations.Usuarios.ClienteValidator;
 using SGRH.Application.Validations.Usuarios.RolUusarioValidator;
 using SGRH.Application.Validations.Usuarios.UsuarioValidator;
 using SGRH.Percistence.Context;
@@ -23,11 +26,22 @@ namespace SGRH.Api
             builder.Services.AddControllers();
 
             builder.Services.AddFluentValidationAutoValidation();
+
             builder.Services.AddValidatorsFromAssemblyContaining<CreateUsuarioValidation>();
             builder.Services.AddValidatorsFromAssemblyContaining<UpdateUsuarioValidation>();
 
             builder.Services.AddValidatorsFromAssemblyContaining<CreateRolUsuarioValidation>();
             builder.Services.AddValidatorsFromAssemblyContaining<UpdateRolUsuarioValidation>();
+
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateClienteValidaiton>();
+            builder.Services.AddValidatorsFromAssemblyContaining<UpdateClienteValidation>();
+
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateServicioValidation>();
+            builder.Services.AddValidatorsFromAssemblyContaining<UpdateServicioValidation>();
+
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateReservaValidation>();
+            builder.Services.AddValidatorsFromAssemblyContaining<UpdateReservaValidation>();
+
 
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

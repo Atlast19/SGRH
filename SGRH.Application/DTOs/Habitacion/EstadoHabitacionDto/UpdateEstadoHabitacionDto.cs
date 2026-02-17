@@ -10,6 +10,5 @@ namespace SGRH.Application.DTOs.Habitacion.EstadoHabitacionDto
 
         public int? UsuarioActualizacion { get; set; }
 
-        public DateTime? FechaActualizacion { get; set; }
     }
 }

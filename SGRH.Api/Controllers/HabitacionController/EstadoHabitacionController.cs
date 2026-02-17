@@ -40,8 +40,13 @@ namespace SGRH.Api.Controllers.HabitacionController
 
         public async Task<IActionResult> GetById(int Id) 
         {
+            if (Id <= 0)
+                return NotFound("No se Encontro el Esato de la Habitaicon Solicitada");
+
             var result = await _service.GetByIdAsync(Id);
 
+            if (result == null)
+                return NotFound("No se Encontro el Estado de la Habitacion Solicitada");
 
             return Ok(result);
         }
@@ -50,8 +55,13 @@ namespace SGRH.Api.Controllers.HabitacionController
 
         public async Task<IActionResult> Delete(int Id, int IdUsuario) 
         {
+            if (Id <= 0 || IdUsuario <= 0)
+                return NotFound("No se Encontro el Esado de la Habitacion a Eliminar");
+
             var result = await _service.DeleteAsync(Id, IdUsuario);
 
+            if (result == null)
+                return NotFound("No se Encontro el Estado de la Habitacion a Eliminar");
 
             return Ok(result);
         }

@@ -7,7 +7,20 @@ namespace SGRH.Application.Validations.Servicios.Servicio
     {
         public CreateServicioValidation()
         {
-            
+            RuleFor(x => x.Nombre)
+                .NotEmpty()
+                .Matches(@"^[\p{L}\s]+$")
+                .MaximumLength(60);
+
+
+            RuleFor(x => x.Descripcion)
+                .NotEmpty()
+                .Matches(@"^[\p{L}\s]+$")
+                .MaximumLength(200);
+
+            RuleFor(x => x.UsuarioCreacion)
+                .NotEmpty()
+                .NotEqual(0);
         }
     }
 }
