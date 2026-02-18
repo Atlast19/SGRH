@@ -1,10 +1,10 @@
 ﻿
 
-namespace SGRH.Application.DTOs.Habitacion.TarifaDto
+namespace SGRH.Application.DTOs.Reserva.ServicioDto
 {
-    public class DeleteTarifaDto
+    public class DeleteServicioDto
     {
-        public int IdTarifa { get; set; }
+        public int IdServicio { get; set; }
 
         public int? UsuarioEliminacion { get; set; }
 

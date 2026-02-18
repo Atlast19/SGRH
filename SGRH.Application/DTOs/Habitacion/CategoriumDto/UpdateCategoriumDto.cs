@@ -12,5 +12,6 @@ namespace SGRH.Application.DTOs.Habitacion.CategoriumDto
 
         public int? UsuarioActualizacion { get; set; }
 
+        public DateTime? FechaActualizacion { get; set; }
     }
 }

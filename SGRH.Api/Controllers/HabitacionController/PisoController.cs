@@ -38,13 +38,8 @@ namespace SGRH.Api.Controllers.HabitacionController
         [HttpGet("GetPisoById")]
         public async Task<IActionResult> GetById(int Id) 
         {
-            if (Id <= 0)
-                return NotFound("No se Encontro el Piso Solicitado");
-
             var result = await _service.GetByIdAsync(Id);
 
-            if (result == null)
-                return NotFound("No se Encontro el Piso Solicitado");
 
             return Ok(result);
         }
@@ -52,13 +47,8 @@ namespace SGRH.Api.Controllers.HabitacionController
         [HttpDelete("DeletePiso")]
         public async Task<IActionResult> Delete(int Id, int IdUsuario) 
         {
-            if (Id <= 0 || IdUsuario <= 0)
-                return NotFound("No se Encontro el Piso a Eliminar");
-
             var result = await _service.DeleteAsync(Id, IdUsuario);
 
-            if (result == null)
-                return NotFound("No se Encontro el Piso a Eliminar");
 
             return Ok(result);
         }

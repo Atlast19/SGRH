@@ -3,9 +3,9 @@ using SGRH.Application.DTOs.Reserva.ServicioDto;
 
 namespace SGRH.Application.Validations.Servicios.Servicio
 {
-    public class CreateServicioValidation : AbstractValidator<CreateServicioDto>
+    public class DeleteServicioValidation : AbstractValidator<DeleteServicioDto>
     {
-        public CreateServicioValidation()
+        public DeleteServicioValidation()
         {
             
         }

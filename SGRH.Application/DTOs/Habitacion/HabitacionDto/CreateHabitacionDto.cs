@@ -15,8 +15,10 @@ namespace SGRH.Application.DTOs.Habitacion.HabitacionDto
 
         public int IdCategoria { get; set; }
 
+        public bool? Estado { get; set; }
+
         public int UsuarioCreacion { get; set; }
 
-
+        public DateTime FechaCreacion { get; set; }
     }
 }

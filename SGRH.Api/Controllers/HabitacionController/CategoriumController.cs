@@ -39,13 +39,8 @@ namespace SGRH.Api.Controllers.HabitacionController
 
         public async Task<IActionResult> GetById(int Id) 
         {
-            if (Id <= 0)
-                return NotFound("No se Encontro la Categoria Solicitada");
-
             var result = await _service.GetByIdAsync(Id);
 
-            if (result == null)
-                return NotFound("No se Encontro la Categoria Solicitada");
 
             return Ok(result);
         }
@@ -54,13 +49,8 @@ namespace SGRH.Api.Controllers.HabitacionController
 
         public async Task<IActionResult> Delete(int Id, int IdUsuario) 
         {
-            if (Id <= 0 || IdUsuario <= 0)
-                return NotFound("No se Encontro la Categoria a Eliminar");
-
             var result = await _service.DeleteAsync(Id,IdUsuario);
 
-            if (result == null)
-                return NotFound("No se Encontro la Categoria a Eliminar");
 
             return Ok(result);
         }

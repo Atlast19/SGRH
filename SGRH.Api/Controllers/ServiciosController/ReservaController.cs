@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SGRH.Application.DTOs.Reserva.ReservaDto;
 using SGRH.Application.Interfaces.Services;
-using System.Diagnostics.CodeAnalysis;
 
 namespace SGRH.Api.Controllers.ServiciosController
 {
@@ -40,13 +39,8 @@ namespace SGRH.Api.Controllers.ServiciosController
 
         public async Task<IActionResult> GetById(int Id) 
         {
-            if (Id <= 0)
-                return NotFound("No se Encontro la Reserva Solicitada");
-
             var result = await _service.GetByIdAsync(Id);
 
-            if (result == null)
-                return NotFound("No se Encontro la Reserva Solicitada");
 
             return Ok(result);
         }
@@ -55,13 +49,8 @@ namespace SGRH.Api.Controllers.ServiciosController
 
         public async Task<IActionResult> Delete(int Id, int IdUsuario) 
         {
-            if (Id <= 0 || IdUsuario <= 0)
-                return NotFound("No se Encontro la Reserva a Eliminar");
-
             var result = await _service.DeleteAsync(Id, IdUsuario);
 
-            if (result == null)
-                return NotFound("No se Encontro la Reserva a Eliminar");
 
             return Ok(result);
         }

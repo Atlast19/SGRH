@@ -18,5 +18,6 @@ namespace SGRH.Application.DTOs.Habitacion.TarifaDto
 
         public int UsuarioCreacion { get; set; }
 
+        public DateTime FechaCreacion { get; set; }
     }
 }

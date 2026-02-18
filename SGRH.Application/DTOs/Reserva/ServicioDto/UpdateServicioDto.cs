@@ -1,10 +1,12 @@
 ﻿
 
-namespace SGRH.Application.DTOs.Habitacion.EstadoHabitacionDto
+namespace SGRH.Application.DTOs.Reserva.ServicioDto
 {
-    public class UpdateEstadoHabitacionDto
+    public class UpdateServicioDto
     {
-        public int IdEstadoHabitacion { get; set; }
+        public int IdServicio { get; set; }
+
+        public string Nombre { get; set; }
 
         public string Descripcion { get; set; }
 
