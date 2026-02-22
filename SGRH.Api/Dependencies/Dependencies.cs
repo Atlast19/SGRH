@@ -1,4 +1,4 @@
-﻿using SGRH.Api.Middleware;
+﻿//using SGRH.Api.Middleware;
 using SGRH.Application.Interfaces.habitacion;
 using SGRH.Application.Interfaces.Services;
 using SGRH.Application.Interfaces.Usuarios;
@@ -58,7 +58,7 @@ namespace SGRH.Api.Dependencies
             #endregion
 
 
-            service.AddTransient<GlobalExecptionMiddleware>();
+            //service.AddTransient<GlobalExecptionMiddleware>();
 
 
 

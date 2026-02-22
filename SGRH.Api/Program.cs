@@ -1,8 +1,9 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SGRH.Api.Dependencies;
-using SGRH.Api.Middleware;
+//using SGRH.Api.Middleware;
 using SGRH.Application.ApplicationAssembly;
 using SGRH.Percistence.Context;
 
@@ -15,8 +16,27 @@ namespace SGRH.Api
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddDbContext<SGHRContext>(options => 
-            options.UseSqlServer(builder.Configuration.GetConnectionString("ConectionString")));
+
+            var connectionStringHome = builder.Configuration.GetConnectionString("ConnectionStringHome");
+            var connectionStringWork = builder.Configuration.GetConnectionString("ConnectionString");
+
+            string selectedConnection;
+
+            try
+            {
+                using var testConnection = new SqlConnection(connectionStringHome);
+                testConnection.Open();
+                selectedConnection = connectionStringHome;
+            }
+            catch
+            {
+                selectedConnection = connectionStringWork;
+            }
+
+            builder.Services.AddDbContext<SGHRContext>(options =>
+                options.UseSqlServer(selectedConnection));
+
+
 
             builder.Services.RegisterOfRependencies();
 
@@ -45,7 +65,7 @@ namespace SGRH.Api
 
             app.UseAuthorization();
 
-            app.UseMiddleware<GlobalExecptionMiddleware>();
+            //app.UseMiddleware<GlobalExecptionMiddleware>();
 
             app.MapControllers();
 
