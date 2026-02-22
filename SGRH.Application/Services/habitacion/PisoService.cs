@@ -29,17 +29,18 @@ namespace SGRH.Application.Services.habitacion
             var resultDto = new CreatePisoDto 
             {
                 Descripcion = Piso.Descripcion,
-                Estado = Piso.Estado,
-                UsuarioCreacion = Piso.UsuarioCreacion,
-                FechaCreacion = Piso.FechaCreacion
+                UsuarioCreacion = Piso.UsuarioCreacion
             };
 
             return resultDto;
         }
 
-        public async Task<DeletePisoDto> DeleteAsync(int Id, int IdUsuario)
+        public async Task<DeletePisoDto?> DeleteAsync(int Id, int IdUsuario)
         {
             var Piso = await _respository.GetByIdAsync(Id);
+
+            if (Piso == null)
+                return null;
 
             Piso.Borrado = true;
             Piso.Estado = false;
@@ -51,10 +52,7 @@ namespace SGRH.Application.Services.habitacion
             var resultDto = new DeletePisoDto
             {
                 IdPiso = Piso.IdPiso,
-                Estado = Piso.Estado,
-                UsuarioEliminacion = Piso.UsuarioEliminacion,
-                FechaEliminado = Piso.FechaEliminado,
-                Borrado = Piso.Borrado
+                UsuarioEliminacion = Piso.UsuarioEliminacion
             };
 
             return resultDto;
@@ -74,9 +72,12 @@ namespace SGRH.Application.Services.habitacion
             return dto;
         }
 
-        public async Task<ReadPisoDto> GetByIdAsync(int Id)
+        public async Task<ReadPisoDto?> GetByIdAsync(int Id)
         {
             var Piso = await _respository.GetByIdAsync(Id);
+
+            if (Piso == null)
+                return null;
 
             var resultDto = new ReadPisoDto
             {
@@ -103,9 +104,7 @@ namespace SGRH.Application.Services.habitacion
             {
                 IdPiso = Piso.IdPiso,
                 Descripcion = Piso.Descripcion,
-                Estado = Piso.Estado,
-                UsuarioActualizacion = Piso.UsuarioActualizacion,
-                FechaActualizacion = Piso.FechaActualizacion
+                UsuarioActualizacion = Piso.UsuarioActualizacion
             };
 
             return resultDto;

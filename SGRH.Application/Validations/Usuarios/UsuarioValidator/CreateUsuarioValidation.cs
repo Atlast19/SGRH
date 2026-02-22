@@ -11,7 +11,7 @@ namespace SGRH.Application.Validations.Usuarios.UsuarioValidator
         {
             RuleFor(x => x.NombreCompleto)
                 .NotEmpty()
-                .MaximumLength(35)
+                .MaximumLength(50)
                 .Matches(@"^[\p{L}\s]+$");
 
             RuleFor(x => x.Correo)
@@ -19,16 +19,14 @@ namespace SGRH.Application.Validations.Usuarios.UsuarioValidator
                 .EmailAddress();
 
             RuleFor(x => x.IdRolUsuario)
-                .NotEmpty()
-                .NotEqual(0);
+                .GreaterThan(0);
 
             RuleFor(x => x.Clave)
                 .NotEmpty()
-                .MaximumLength(30);
+                .MaximumLength(50);
 
             RuleFor(x => x.UsuarioCreacion)
-                .NotEmpty()
-                .NotEqual(0);
+                .GreaterThan(0);
         }
     }
 }

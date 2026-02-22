@@ -3,8 +3,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using SGRH.Api.Dependencies;
 using SGRH.Api.Middleware;
-using SGRH.Application.Validations.Usuarios.RolUusarioValidator;
-using SGRH.Application.Validations.Usuarios.UsuarioValidator;
+using SGRH.Application.ApplicationAssembly;
 using SGRH.Percistence.Context;
 
 namespace SGRH.Api
@@ -16,18 +15,17 @@ namespace SGRH.Api
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddDbContext<SGHRContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConectionString")));
+            builder.Services.AddDbContext<SGHRContext>(options => 
+            options.UseSqlServer(builder.Configuration.GetConnectionString("ConectionString")));
 
             builder.Services.RegisterOfRependencies();
 
             builder.Services.AddControllers();
 
             builder.Services.AddFluentValidationAutoValidation();
-            builder.Services.AddValidatorsFromAssemblyContaining<CreateUsuarioValidation>();
-            builder.Services.AddValidatorsFromAssemblyContaining<UpdateUsuarioValidation>();
 
-            builder.Services.AddValidatorsFromAssemblyContaining<CreateRolUsuarioValidation>();
-            builder.Services.AddValidatorsFromAssemblyContaining<UpdateRolUsuarioValidation>();
+            builder.Services.AddValidatorsFromAssembly(typeof(ApplicationAssemblyReference).Assembly);
+
 
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

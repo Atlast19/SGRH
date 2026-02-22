@@ -14,25 +14,23 @@ namespace SGRH.Application.Validations.Usuarios.ClienteValidator
             RuleFor(x => x.NombreCompleto)
                 .NotEmpty()
                 .Matches(@"^[\p{L}\s]+$")
-                .MaximumLength(35);
+                .MaximumLength(50);
 
             RuleFor(x => x.TipoDocumento)
                 .NotEmpty()
                 .Matches(@"^[\p{L}\s]+$")
-                .MaximumLength(20);
+                .MaximumLength(15);
 
             RuleFor(x => x.Documento)
                 .NotEmpty()
-                .MinimumLength(6)
-                .MaximumLength(12);
+                .MaximumLength(15);
 
             RuleFor(x => x.Correo)
                 .NotEmpty()
                 .EmailAddress();
 
             RuleFor(x => x.UsuarioActualizacion)
-                .NotEmpty()
-                .NotEqual(0);
+                .GreaterThan(0);
         }
     }
 }

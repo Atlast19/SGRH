@@ -28,17 +28,18 @@ namespace SGRH.Application.Services.habitacion
             var resultDto = new CreateEstadoHabitacionDto 
             {
                 Descripcion = EstadoHabitacion.Descripcion,
-                Estado = EstadoHabitacion.Estado,
-                UsuarioCreacion = EstadoHabitacion.UsuarioCreacion,
-                FechaCreacion = EstadoHabitacion.FechaCreacion
+                UsuarioCreacion = EstadoHabitacion.UsuarioCreacion
             };
 
             return resultDto;
         }
 
-        public async Task<DeleteEstadoHabitacionDto> DeleteAsync(int Id, int IdUsuario)
+        public async Task<DeleteEstadoHabitacionDto?> DeleteAsync(int Id, int IdUsuario)
         {
             var EstadoHabitacion = await _repository.GetByIdAsync(Id);
+
+            if (EstadoHabitacion == null)
+                return null;
 
             EstadoHabitacion.Borrado = true;
             EstadoHabitacion.Estado = false;
@@ -50,10 +51,7 @@ namespace SGRH.Application.Services.habitacion
             var resultDto = new DeleteEstadoHabitacionDto
             {
                 IdEstadoHabitacion = EstadoHabitacion.IdEstadoHabitacion,
-                Estado = EstadoHabitacion.Estado,
-                UsuarioEliminacion = EstadoHabitacion.UsuarioEliminacion,
-                FechaEliminado = EstadoHabitacion.FechaEliminado,
-                Borrado = EstadoHabitacion.Borrado
+                UsuarioEliminacion = EstadoHabitacion.UsuarioEliminacion
             };
 
             return resultDto;
@@ -76,6 +74,9 @@ namespace SGRH.Application.Services.habitacion
         public async Task<ReadEstadoHabitacionDto> GetByIdAsync(int Id)
         {
             var EstadoHabitacion = await _repository.GetByIdAsync(Id);
+
+            if (EstadoHabitacion == null)
+                return null;
 
             var resultDto = new ReadEstadoHabitacionDto
             {
@@ -100,8 +101,7 @@ namespace SGRH.Application.Services.habitacion
             {
                 IdEstadoHabitacion = EstadoHabitacion.IdEstadoHabitacion,
                 Descripcion = EstadoHabitacion.Descripcion,
-                UsuarioActualizacion = EstadoHabitacion.UsuarioActualizacion,
-                FechaActualizacion = EstadoHabitacion.FechaActualizacion
+                UsuarioActualizacion = EstadoHabitacion.UsuarioActualizacion
             };
 
             return resultDto;

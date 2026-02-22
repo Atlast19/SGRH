@@ -22,7 +22,7 @@ namespace SGRH.Application.Services.Servicios
             Servicio.Nombre = dto.Nombre;
             Servicio.Descripcion = dto.Descripcion;
             Servicio.UsuarioCreacion = dto.UsuarioCreacion;
-            Servicio.FechaCreacion = dto.FechaCreacion;
+            Servicio.FechaCreacion = DateTime.Now;
             Servicio.Estado = true;
 
             await _repository.CreateAsync(Servicio);
@@ -31,17 +31,19 @@ namespace SGRH.Application.Services.Servicios
             {
                 Nombre = Servicio.Nombre,
                 Descripcion = Servicio.Descripcion,
-                UsuarioCreacion = Servicio.UsuarioCreacion,
-                FechaCreacion = Servicio.FechaCreacion
+                UsuarioCreacion = Servicio.UsuarioCreacion
             };
 
             return resultDto;
 
         }
 
-        public async Task<DeleteServicioDto> DeleteAsync(int Id, int IdUsuario)
+        public async Task<DeleteServicioDto?> DeleteAsync(int Id, int IdUsuario)
         {
             var Servicio = await _repository.GetByIdAsync(Id);
+
+            if (Servicio == null)
+                return null;
 
             Servicio.Borrado = true;
             Servicio.Estado = false;
@@ -53,10 +55,7 @@ namespace SGRH.Application.Services.Servicios
             var resultDto = new DeleteServicioDto
             {
                 IdServicio = Servicio.IdServicio,
-                UsuarioEliminacion = Servicio.UsuarioEliminacion,
-                FechaEliminado = Servicio.FechaEliminado,
-                Estado = Servicio.Estado,
-                Borrado = Servicio.Borrado
+                UsuarioEliminacion = Servicio.UsuarioEliminacion
             };
 
             return resultDto;
@@ -77,9 +76,12 @@ namespace SGRH.Application.Services.Servicios
             return dto;
         }
 
-        public async Task<ReadServicioDto> GetByIdAsync(int Id)
+        public async Task<ReadServicioDto?> GetByIdAsync(int Id)
         {
             var Servicio = await _repository.GetByIdAsync(Id);
+
+            if (Servicio == null)
+                return null;
 
             var resultDto = new ReadServicioDto
             {
@@ -108,8 +110,7 @@ namespace SGRH.Application.Services.Servicios
                 IdServicio = Servicio.IdServicio,
                 Nombre = Servicio.Nombre,
                 Descripcion = Servicio.Descripcion,
-                UsuarioActualizacion = Servicio.UsuarioActualizacion,
-                FechaActualizacion = Servicio.FechaActualizacion
+                UsuarioActualizacion = Servicio.UsuarioActualizacion
             };
 
             return resultDto;

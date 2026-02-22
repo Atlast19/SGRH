@@ -48,17 +48,18 @@ namespace SGRH.Application.Services.Servicios
                 TotalPagado = Reserva.TotalPagado,
                 CostoPenalidad = Reserva.CostoPenalidad,
                 Observacion = Reserva.Observacion,
-                Estado = Reserva.Estado,
-                UsuarioCreacion = Reserva.UsuarioCreacion,
-                FechaCreacion = Reserva.FechaCreacion
+                UsuarioCreacion = Reserva.UsuarioCreacion
             };
 
             return resultDto;
         }
 
-        public async Task<DeleteReservaDto> DeleteAsync(int Id, int IdUsuario)
+        public async Task<DeleteReservaDto?> DeleteAsync(int Id, int IdUsuario)
         {
             var Reserva = await _repository.GetByIdAsync(Id);
+
+            if (Reserva == null)
+                return null;
 
             Reserva.Borrado = true;
             Reserva.Estado = false;
@@ -70,10 +71,7 @@ namespace SGRH.Application.Services.Servicios
             var resultDto = new DeleteReservaDto
             {
                 IdReserva = Reserva.IdReserva,
-                Estado = Reserva.Estado,
-                UsuarioEliminacion = Reserva.UsuarioEliminacion,
-                FechaEliminado = Reserva.FechaEliminado,
-                Borrado = Reserva.Borrado
+                UsuarioEliminacion = Reserva.UsuarioEliminacion
             };
 
             return resultDto;
@@ -107,6 +105,9 @@ namespace SGRH.Application.Services.Servicios
         public async Task<ReadReservaDto> GetByIdAsync(int Id)
         {
             var Reserva = await _repository.GetByIdAsync(Id);
+
+            if (Reserva == null)
+                return null;
 
             var resultDto = new ReadReservaDto
             {
@@ -165,8 +166,7 @@ namespace SGRH.Application.Services.Servicios
                 TotalPagado = Reserva.TotalPagado,
                 CostoPenalidad = Reserva.CostoPenalidad,
                 Observacion = Reserva.Observacion,
-                UsuarioActualizacion = Reserva.UsuarioActualizacion,
-                FechaActualizacion = Reserva.FechaActualizacion
+                UsuarioActualizacion = Reserva.UsuarioActualizacion
             };
 
             return resultDto;

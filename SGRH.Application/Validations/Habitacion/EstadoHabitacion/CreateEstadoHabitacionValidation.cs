@@ -7,7 +7,13 @@ namespace SGRH.Application.Validations.Habitacion.EstadoHabitacion
     {
         public CreateEstadoHabitacionValidation()
         {
-            
+            RuleFor(x => x.Descripcion)
+                .NotEmpty()
+                .Matches(@"^[\p{L}\s]+$")
+                .MaximumLength(50);
+
+            RuleFor(x => x.UsuarioCreacion)
+                .GreaterThan(0);
         }
     }
 }

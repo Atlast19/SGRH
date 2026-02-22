@@ -38,9 +38,7 @@ namespace SGRH.Application.Services.habitacion
                 IdEstadoHabitacion = Habitacion.IdEstadoHabitacion,
                 IdPiso = Habitacion.IdPiso,
                 IdCategoria = Habitacion.IdCategoria,
-                Estado = Habitacion.Estado,
-                UsuarioCreacion = Habitacion.UsuarioCreacion,
-                FechaCreacion = Habitacion.FechaCreacion
+                UsuarioCreacion = Habitacion.UsuarioCreacion
             };
 
             return resultDto;
@@ -49,6 +47,9 @@ namespace SGRH.Application.Services.habitacion
         public async Task<DeleteHabitacionDto> DeleteAsync(int Id, int IdUsuario)
         {
             var Habitacion = await _repository.GetByIdAsync(Id);
+
+            if (Habitacion == null)
+                return null;
 
             Habitacion.Borrado = true;
             Habitacion.Estado = false;
@@ -60,10 +61,7 @@ namespace SGRH.Application.Services.habitacion
             var resultDto = new DeleteHabitacionDto
             {
                 IdHabitacion = Habitacion.IdHabitacion,
-                Estado = Habitacion.Estado,
-                UsuarioEliminacion = Habitacion.UsuarioEliminacion,
-                FechaEliminado = Habitacion.FechaEliminado,
-                Borrado = Habitacion.Borrado
+                UsuarioEliminacion = Habitacion.UsuarioEliminacion
             };
 
             return resultDto;
@@ -89,9 +87,12 @@ namespace SGRH.Application.Services.habitacion
             return dto;
         }
 
-        public async Task<ReadHabitacionDto> GetByIdAsync(int Id)
+        public async Task<ReadHabitacionDto?> GetByIdAsync(int Id)
         {
             var Habitacion = await _repository.GetByIdAsync(Id);
+
+            if (Habitacion == null)
+                return null;
 
             var resultDto = new ReadHabitacionDto
             {
@@ -132,8 +133,7 @@ namespace SGRH.Application.Services.habitacion
                 IdEstadoHabitacion = Habitacion.IdEstadoHabitacion,
                 IdPiso = Habitacion.IdPiso,
                 IdCategoria = Habitacion.IdCategoria,
-                UsuarioActualizacion = Habitacion.UsuarioActualizacion,
-                FechaActualizacion = Habitacion.FechaActualizacion
+                UsuarioActualizacion = Habitacion.UsuarioActualizacion
             };
 
             return resultDto;

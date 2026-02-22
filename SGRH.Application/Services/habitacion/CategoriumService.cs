@@ -31,9 +31,7 @@ namespace SGRH.Application.Services.habitacion
             {
                 Descripcion = Categoria.Descripcion,
                 IdServicio = Categoria.IdServicio,
-                Estado = Categoria.Estado,
-                UsuarioCreacion = Categoria.UsuarioCreacion,
-                FechaCreacion = Categoria.FechaCreacion
+                UsuarioCreacion = Categoria.UsuarioCreacion
             };
 
             return resultDto;
@@ -42,6 +40,9 @@ namespace SGRH.Application.Services.habitacion
         public async Task<DeleteCategoriumDto> DeleteAsync(int Id, int IdUsuario)
         {
             var Categoria = await _repository.GetByIdAsync(Id);
+
+            if (Categoria == null)
+                return null;
 
             Categoria.Borrado = true;
             Categoria.Estado = false;
@@ -53,10 +54,7 @@ namespace SGRH.Application.Services.habitacion
             var resultDto = new DeleteCategoriumDto
             {
                 IdCategoria = Categoria.IdCategoria,
-                Estado = Categoria.Estado,
-                UsuarioEliminacion = Categoria.UsuarioEliminacion,
-                FechaEliminado = Categoria.FechaEliminado,
-                Borrado = Categoria.Borrado
+                UsuarioEliminacion = Categoria.UsuarioEliminacion
             };
 
             return resultDto;
@@ -80,6 +78,9 @@ namespace SGRH.Application.Services.habitacion
         public async Task<ReadCategoriumDto> GetByIdAsync(int Id)
         {
             var Categoria = await _repository.GetByIdAsync(Id);
+
+            if (Categoria == null)
+                return null;
 
             var resultDto = new ReadCategoriumDto
             {
@@ -108,8 +109,7 @@ namespace SGRH.Application.Services.habitacion
                 IdCategoria = Categoria.IdCategoria,
                 Descripcion = Categoria.Descripcion,
                 IdServicio = Categoria.IdServicio,
-                UsuarioActualizacion = Categoria.UsuarioActualizacion,
-                FechaActualizacion = Categoria.FechaActualizacion
+                UsuarioActualizacion = Categoria.UsuarioActualizacion
             };
 
             return resultDto;

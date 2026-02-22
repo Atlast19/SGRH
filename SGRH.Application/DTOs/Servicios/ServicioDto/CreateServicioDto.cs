@@ -10,6 +10,5 @@ namespace SGRH.Application.DTOs.Reserva.ServicioDto
 
         public int UsuarioCreacion { get; set; }
 
-        public DateTime FechaCreacion { get; set; }
     }
 }

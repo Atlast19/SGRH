@@ -7,7 +7,13 @@ namespace SGRH.Application.Validations.Habitacion.Piso
     {
         public UpdatePisoValidation()
         {
-            
+            RuleFor(x => x.Descripcion)
+                .NotEmpty()
+                .Matches(@"^[\p{L}\s]+$")
+                .MaximumLength(50);
+
+            RuleFor(x => x.UsuarioActualizacion)                .NotEmpty()
+                .GreaterThan(0);
         }
     }
 }

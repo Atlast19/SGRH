@@ -3,9 +3,9 @@ using SGRH.Application.DTOs.Habitacion.TarifaDto;
 
 namespace SGRH.Application.Validations.Habitacion.Tarifa
 {
-    public class UpdateTarifaValidation : AbstractValidator<UpdateTarifaDto>
+    public class CreateTarifaValidation : AbstractValidator<CreateTarifaDto>
     {
-        public UpdateTarifaValidation()
+        public CreateTarifaValidation()
         {
             var hoy = DateOnly.FromDateTime(DateTime.Today);
 
@@ -29,8 +29,8 @@ namespace SGRH.Application.Validations.Habitacion.Tarifa
                 .NotEmpty()
                 .Matches(@"^[\p{L}\s]+$")
                 .MaximumLength(255);
-
-            RuleFor(x => x.UsuarioActualizacion)
+            
+            RuleFor(x => x.UsuarioCreacion)
                 .GreaterThan(0);
         }
     }

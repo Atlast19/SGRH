@@ -2,10 +2,8 @@
 
 namespace SGRH.Application.DTOs.Reserva.ReservaDto
 {
-    public class UpdateReservaDto
+    public class CreateReservaDto
     {
-        public int IdReserva { get; set; }
-
         public int IdCliente { get; set; }
 
         public int IdHabitacion { get; set; }
@@ -28,8 +26,7 @@ namespace SGRH.Application.DTOs.Reserva.ReservaDto
 
         public string? Observacion { get; set; }
 
-        public int? UsuarioActualizacion { get; set; }
+        public int UsuarioCreacion { get; set; }
 
-        public DateTime? FechaActualizacion { get; set; }
     }
 }

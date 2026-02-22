@@ -11,12 +11,11 @@ namespace SGRH.Application.Validations.Usuarios.RolUusarioValidator
 
             RuleFor(x => x.Descripcion)
                 .NotEmpty()
-                .MaximumLength(30)
+                .MaximumLength(50)
                 .Matches(@"^[\p{L}\s]+$");
 
             RuleFor(x => x.UsuarioCreacion)
-                .NotEmpty()
-                .NotEqual(0);
+                .GreaterThan(0);
         }
 
     }

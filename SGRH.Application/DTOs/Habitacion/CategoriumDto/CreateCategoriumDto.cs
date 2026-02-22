@@ -8,10 +8,7 @@ namespace SGRH.Application.DTOs.Habitacion.CategoriumDto
 
         public int IdServicio { get; set; }
 
-        public bool? Estado { get; set; }
-
         public int UsuarioCreacion { get; set; }
 
-        public DateTime FechaCreacion { get; set; }
     }
 }

@@ -39,8 +39,13 @@ namespace SGRH.Api.Controllers.ServiciosController
 
         public async Task<IActionResult> GetById(int Id) 
         {
+            if (Id <= 0)
+                return NotFound("No se Encontro el Servicio Solicitado");
+
             var result = await _service.GetByIdAsync(Id);
 
+            if (result == null)
+                return NotFound("No se Encontro el Servicio Solicitado");
 
             return Ok(result);
         }
@@ -49,8 +54,13 @@ namespace SGRH.Api.Controllers.ServiciosController
 
         public async Task<IActionResult> Deletele(int Id, int IdUsuario) 
         {
+            if (Id <= 0 || IdUsuario <= 0)
+                return NotFound("No se Encontro el Servicio a Eliminar");
+
             var result = await _service.DeleteAsync(Id, IdUsuario);
 
+            if (result == null)
+                return NotFound("No se Encontro el Servicio a Eliminar");
 
             return Ok(result);
         }

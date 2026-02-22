@@ -12,6 +12,5 @@ namespace SGRH.Application.DTOs.Reserva.ServicioDto
 
         public int? UsuarioActualizacion { get; set; }
 
-        public DateTime? FechaActualizacion { get; set; }
     }
 }

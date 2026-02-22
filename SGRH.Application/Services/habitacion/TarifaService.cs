@@ -38,17 +38,19 @@ namespace SGRH.Application.Services.habitacion
                 PrecioPorNoche = Tarifa.PrecioPorNoche,
                 Descuento = Tarifa.Descuento,
                 Descripcion = Tarifa.Descripcion,
-                UsuarioCreacion = Tarifa.UsuarioCreacion,
-                FechaCreacion = Tarifa.FechaCreacion
+                UsuarioCreacion = Tarifa.UsuarioCreacion
             };
 
             return restulDto;
 
         }
 
-        public async Task<DeleteTarifaDto> DeleteAsync(int Id, int IdUsuario)
+        public async Task<DeleteTarifaDto?> DeleteAsync(int Id, int IdUsuario)
         {
             var Tarifa = await _repository.GetByIdAsync(Id);
+
+            if (Tarifa == null)
+                return null;
 
             Tarifa.Borrado = true;
             Tarifa.Estado = false;
@@ -60,10 +62,7 @@ namespace SGRH.Application.Services.habitacion
             var restulDto = new DeleteTarifaDto
             {
                 IdTarifa = Tarifa.IdTarifa,
-                Estado = Tarifa.Estado,
-                UsuarioEliminacion = Tarifa.UsuarioEliminacion,
-                FechaEliminado = Tarifa.FechaEliminado,
-                Borrado = Tarifa.Borrado
+                UsuarioEliminacion = Tarifa.UsuarioEliminacion
             };
 
             return restulDto;
@@ -91,6 +90,9 @@ namespace SGRH.Application.Services.habitacion
         public async Task<ReadTarifaDto> GetByIdAsync(int Id)
         {
             var Tarifa = await _repository.GetByIdAsync(Id);
+
+            if (Tarifa == null)
+                return null;
 
             var restulDto = new ReadTarifaDto
             {
@@ -133,8 +135,7 @@ namespace SGRH.Application.Services.habitacion
                 PrecioPorNoche = Tarifa.PrecioPorNoche,
                 Descuento = Tarifa.Descuento,
                 Descripcion = Tarifa.Descripcion,
-                UsuarioActualizacion = Tarifa.UsuarioActualizacion,
-                FechaActualizacion = Tarifa.FechaActualizacion
+                UsuarioActualizacion = Tarifa.UsuarioActualizacion
             };
 
             return restulDto;
